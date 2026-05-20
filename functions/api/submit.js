@@ -4,12 +4,16 @@ export async function onRequestPost({ request, env }) {
 
     await env.DB.prepare(`
       INSERT INTO submissions
-        (submitted_at, annual_revenue, team_members, firm_worth,
+        (submitted_at, name, email, phone,
+         annual_revenue, team_members, firm_worth,
          client_count, tax_returns, tax_software, documentation,
          efficiency, bottleneck)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
       new Date().toISOString(),
+      data['Name']                           || '',
+      data['Email']                          || '',
+      data['Phone']                          || '',
       data['Annual Gross Revenue']           || '',
       data['Team Members']                   || '',
       data['Estimated Firm Worth']           || '',

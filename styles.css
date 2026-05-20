@@ -137,6 +137,58 @@ body {
   color: var(--error);
 }
 
+/* ── Contact fields ──────────────────────────── */
+.contact-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.contact-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: #fafbfd;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.contact-field input:focus {
+  outline: none;
+  border-color: var(--navy);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(26, 37, 80, 0.07);
+}
+
+.contact-field input::placeholder {
+  color: var(--text-muted);
+}
+
+.question-card.error .contact-field input:invalid,
+.question-card.error .contact-field input:placeholder-shown {
+  border-color: var(--error);
+}
+
+@media (max-width: 600px) {
+  .contact-fields {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
 /* ── Option rows ─────────────────────────────── */
 .options {
   display: flex;

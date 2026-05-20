@@ -33,6 +33,26 @@
         <!-- honeypot -->
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true" />
 
+        <!-- ── Contact Info ── -->
+        <div class="question-card" id="contact-card">
+          <div class="question-label">Your Contact Information</div>
+          <div class="contact-fields">
+            <div class="contact-field">
+              <label for="contact-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="contact-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+            </div>
+            <div class="contact-field">
+              <label for="contact-email">Email Address <span class="required">*</span></label>
+              <input type="email" id="contact-email" name="email" placeholder="jane@example.com" autocomplete="email" />
+            </div>
+            <div class="contact-field">
+              <label for="contact-phone">Phone Number <span class="required">*</span></label>
+              <input type="tel" id="contact-phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="error-message" id="contact-error">Please fill in all contact fields.</div>
+        </div>
+
         <!-- ── Q1: Annual Revenue ── -->
         <div class="question-card" id="q1-card">
           <div class="question-label">1. What is your current annual gross revenue? <span class="required">*</span></div>
@@ -334,6 +354,13 @@
       { id: 'q8-card', type: 'radio',    name: 'efficiency'     },
     ];
 
+    // Clear contact errors on input
+    ['contact-name','contact-email','contact-phone'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', function () {
+        document.getElementById('contact-card').classList.remove('error');
+      });
+    });
+
     // Clear error when user makes a selection
     REQUIRED.forEach(function (q) {
       var card = document.getElementById(q.id);
@@ -347,6 +374,22 @@
     function validate() {
       var firstError = null;
       var valid = true;
+
+      // Contact fields
+      var contactCard  = document.getElementById('contact-card');
+      var nameOk  = document.getElementById('contact-name').value.trim() !== '';
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('contact-email').value.trim());
+      var phoneOk = document.getElementById('contact-phone').value.trim() !== '';
+      contactCard.classList.remove('error');
+      if (!nameOk || !emailOk || !phoneOk) {
+        contactCard.classList.add('error');
+        document.getElementById('contact-error').textContent =
+          !nameOk ? 'Full name is required.' :
+          !emailOk ? 'Please enter a valid email address.' :
+          'Phone number is required.';
+        valid = false;
+        if (!firstError) firstError = contactCard;
+      }
 
       REQUIRED.forEach(function (q) {
         var card = document.getElementById(q.id);
@@ -397,6 +440,9 @@
 
     function buildPayload() {
       var p = {};
+      p['Name']                          = document.getElementById('contact-name').value.trim();
+      p['Email']                         = document.getElementById('contact-email').value.trim();
+      p['Phone']                         = document.getElementById('contact-phone').value.trim();
       p['Annual Gross Revenue']          = radioAnswer('annual_revenue', 'q1-other');
       p['Team Members']                  = radioAnswer('team_members', null);
       p['Estimated Firm Worth']          = radioAnswer('firm_worth', 'q3-other');

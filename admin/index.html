@@ -455,12 +455,12 @@
             <tr>
               <th data-col="id">#</th>
               <th data-col="submitted_at">Date</th>
+              <th data-col="name">Name</th>
+              <th data-col="email" class="col-hide">Email</th>
               <th data-col="annual_revenue">Revenue</th>
               <th data-col="team_members">Team</th>
               <th data-col="firm_worth" class="col-hide">Worth</th>
-              <th data-col="client_count">Clients</th>
-              <th data-col="tax_returns" class="col-hide">Returns</th>
-              <th data-col="tax_software" class="col-hide">Software</th>
+              <th data-col="client_count" class="col-hide">Clients</th>
               <th data-col="efficiency">Efficiency</th>
               <th data-col="bottleneck">Bottleneck</th>
             </tr>
@@ -626,12 +626,12 @@
       const row = `<tr class="data-row ${isExpanded ? 'expanded' : ''}" data-id="${s.id}">
         <td class="id-col">${s.id}</td>
         <td class="date-col">${fmt(s.submitted_at)}</td>
+        <td><strong>${esc(s.name) || '—'}</strong></td>
+        <td class="col-hide">${esc(s.email) ? `<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>` : '—'}</td>
         <td><span class="pill revenue">${esc(s.annual_revenue) || '—'}</span></td>
         <td><span class="pill team">${esc(s.team_members) || '—'}</span></td>
         <td class="col-hide"><span class="pill worth">${esc(s.firm_worth) || '—'}</span></td>
-        <td><span class="pill clients">${esc(s.client_count) || '—'}</span></td>
-        <td class="col-hide">${esc(s.tax_returns) || '—'}</td>
-        <td class="col-hide">${esc(s.tax_software) || '—'}</td>
+        <td class="col-hide"><span class="pill clients">${esc(s.client_count) || '—'}</span></td>
         <td>${esc(s.efficiency) || '—'}</td>
         <td class="bottleneck-col">${esc(s.bottleneck) || ''}</td>
       </tr>`;
@@ -639,6 +639,9 @@
       const detail = isExpanded ? `<tr class="expand-row" data-id="${s.id}">
         <td colspan="10">
           <div class="expand-inner">
+            <div class="expand-field"><label>Name</label><p>${esc(s.name)||'—'}</p></div>
+            <div class="expand-field"><label>Email</label><p>${esc(s.email) ? `<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>` : '—'}</p></div>
+            <div class="expand-field"><label>Phone</label><p>${esc(s.phone) ? `<a href="tel:${esc(s.phone)}" style="color:var(--navy)">${esc(s.phone)}</a>` : '—'}</p></div>
             <div class="expand-field"><label>Annual Revenue</label><p>${esc(s.annual_revenue)||'—'}</p></div>
             <div class="expand-field"><label>Team Members</label><p>${esc(s.team_members)||'—'}</p></div>
             <div class="expand-field"><label>Firm Worth</label><p>${esc(s.firm_worth)||'—'}</p></div>
@@ -669,12 +672,14 @@
 
   document.getElementById('export-btn').addEventListener('click', function () {
     const headers = [
-      'ID','Submitted At','Annual Revenue','Team Members','Firm Worth',
+      'ID','Submitted At','Name','Email','Phone',
+      'Annual Revenue','Team Members','Firm Worth',
       'Client Count','Tax Returns','Tax Software','Documentation','Efficiency','Bottleneck'
     ];
     const rows = filtered.map(function (s) {
       return [
-        s.id, s.submitted_at, s.annual_revenue, s.team_members, s.firm_worth,
+        s.id, s.submitted_at, s.name, s.email, s.phone,
+        s.annual_revenue, s.team_members, s.firm_worth,
         s.client_count, s.tax_returns, s.tax_software, s.documentation,
         s.efficiency, s.bottleneck
       ].map(function (v) {
