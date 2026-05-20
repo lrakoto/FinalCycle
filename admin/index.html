@@ -280,26 +280,76 @@
     .pill.worth    { background: #fff8e1; color: #e65100; }
     .pill.clients  { background: #fce4ec; color: #880e4f; }
 
-    /* Status pills — clickable */
+    /* ── Status dropdown ── */
+    th.status-col,
+    td.status-col { width: 148px; min-width: 148px; max-width: 148px; }
+
+    .status-wrap { position: relative; display: inline-block; width: 124px; }
+
     .status-pill {
-      display: inline-block;
-      padding: 4px 10px;
+      display: block;
+      width: 100%;
+      padding: 5px 10px;
       border-radius: 20px;
+      border: none;
+      font-family: inherit;
       font-size: 0.72rem;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
+      text-align: center;
       user-select: none;
       white-space: nowrap;
+      transition: opacity 0.15s;
     }
 
-    .status-pill:hover  { opacity: 0.8; }
-    .status-pill:active { transform: scale(0.95); }
+    .status-pill:hover  { opacity: 0.82; }
 
     .status-New         { background: #e3f2fd; color: #1565c0; }
     .status-Contacted   { background: #fff3e0; color: #e65100; }
     .status-In-Progress { background: #f3e5f5; color: #6a1b9a; }
     .status-Closed      { background: #e8f5e9; color: #2e7d32; }
+
+    .status-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      z-index: 300;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      box-shadow: 0 6px 20px rgba(26,37,80,0.13);
+      overflow: hidden;
+      min-width: 140px;
+    }
+
+    .status-menu.hidden { display: none; }
+
+    .status-menu li {
+      list-style: none;
+      padding: 9px 14px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.13s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-menu li:hover { background: var(--bg); }
+
+    .status-menu li.current { font-weight: 700; }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-New         { background: #1565c0; }
+    .dot-Contacted   { background: #e65100; }
+    .dot-In-Progress { background: #6a1b9a; }
+    .dot-Closed      { background: #2e7d32; }
 
     td.bottleneck-col {
       max-width: 180px;
@@ -471,8 +521,8 @@
               <th data-col="team_members" class="col-hide">Team</th>
               <th data-col="client_count" class="col-hide">Clients</th>
               <th data-col="efficiency">Efficiency</th>
-              <th data-col="status">Status</th>
-              <th data-col="bottleneck">Bottleneck</th>
+              <th data-col="status" class="status-col">Status</th>
+              <th data-col="bottleneck">Biggest Bottleneck</th>
             </tr>
           </thead>
           <tbody id="table-body">
@@ -677,7 +727,14 @@
         <td class="col-hide"><span class="pill team">${esc(s.team_members)||'—'}</span></td>
         <td class="col-hide"><span class="pill clients">${esc(s.client_count)||'—'}</span></td>
         <td>${esc(s.efficiency)||'—'}</td>
-        <td><span class="status-pill ${statusClass(s.status)}" data-id="${s.id}" data-status="${esc(s.status||'New')}">${esc(s.status||'New')}</span></td>
+        <td class="status-col">
+          <div class="status-wrap" data-id="${s.id}">
+            <button class="status-pill ${statusClass(s.status||'New')}" type="button">${esc(s.status||'New')}</button>
+            <ul class="status-menu hidden">
+              ${STATUSES.map(st => `<li data-value="${st}" class="${st===(s.status||'New')?'current':''}"><span class="status-dot dot-${st.replace(/\s+/g,'-')}"></span>${st}</li>`).join('')}
+            </ul>
+          </div>
+        </td>
         <td class="bottleneck-col">${esc(s.bottleneck)||''}</td>
       </tr>`;
 
@@ -701,39 +758,58 @@
       return row + detail;
     }).join('');
 
-    // Row click → expand (ignore clicks on status pill)
+    // Row click → expand (ignore clicks inside status wrap)
     tbody.querySelectorAll('tr.data-row').forEach(function (tr) {
       tr.addEventListener('click', function (e) {
-        if (e.target.closest('.status-pill')) return;
+        if (e.target.closest('.status-wrap')) return;
         const id = parseInt(tr.dataset.id);
         expandedId = expandedId === id ? null : id;
         sortAndRender();
       });
     });
 
-    // Status pill click → cycle status
-    tbody.querySelectorAll('.status-pill').forEach(function (pill) {
-      pill.addEventListener('click', async function (e) {
+    // Status dropdown — open/close
+    tbody.querySelectorAll('.status-wrap').forEach(function (wrap) {
+      const btn  = wrap.querySelector('.status-pill');
+      const menu = wrap.querySelector('.status-menu');
+
+      btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        const id      = parseInt(pill.dataset.id);
-        const current = pill.dataset.status;
-        const next    = STATUSES[(STATUSES.indexOf(current) + 1) % STATUSES.length];
+        // Close any other open menus
+        tbody.querySelectorAll('.status-menu').forEach(function (m) {
+          if (m !== menu) m.classList.add('hidden');
+        });
+        menu.classList.toggle('hidden');
+      });
 
-        // Optimistic update
-        const sub = allSubmissions.find(s => s.id === id);
-        if (sub) sub.status = next;
-        pill.textContent  = next;
-        pill.dataset.status = next;
-        pill.className = 'status-pill ' + statusClass(next);
-        updateStats();
+      menu.querySelectorAll('li').forEach(function (li) {
+        li.addEventListener('click', async function (e) {
+          e.stopPropagation();
+          const id     = parseInt(wrap.dataset.id);
+          const status = li.dataset.value;
+          menu.classList.add('hidden');
 
-        await fetch('/api/submissions', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': adminKey },
-          body: JSON.stringify({ id, status: next })
+          // Optimistic update
+          const sub = allSubmissions.find(s => s.id === id);
+          if (sub) sub.status = status;
+          btn.textContent = status;
+          btn.className   = 'status-pill ' + statusClass(status);
+          menu.querySelectorAll('li').forEach(l => l.classList.toggle('current', l.dataset.value === status));
+          updateStats();
+
+          await fetch('/api/submissions', {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json', 'X-Admin-Key': adminKey },
+            body:    JSON.stringify({ id, status })
+          });
         });
       });
     });
+
+    // Close menus on outside click
+    document.addEventListener('click', function () {
+      tbody.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
+    }, { once: false });
   }
 
   // ── CSV Export ────────────────────────────────────────────────────────────
