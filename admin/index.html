@@ -21,7 +21,6 @@
       --mid:       #4e5470;
       --muted:     #8890ab;
       --error:     #c0392b;
-      --success:   #1e7e4a;
     }
 
     body {
@@ -32,7 +31,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Login screen ── */
+    /* ── Login ── */
     #login-screen {
       display: flex;
       align-items: center;
@@ -51,10 +50,7 @@
       text-align: center;
     }
 
-    .login-card img {
-      height: 48px;
-      margin-bottom: 28px;
-    }
+    .login-card img { height: 48px; margin-bottom: 28px; }
 
     .login-card h1 {
       font-size: 1rem;
@@ -65,11 +61,7 @@
       margin-bottom: 6px;
     }
 
-    .login-card p {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
+    .login-card p { font-size: 0.8rem; color: var(--muted); margin-bottom: 28px; }
 
     .login-card input {
       width: 100%;
@@ -83,10 +75,7 @@
       transition: border-color 0.2s;
     }
 
-    .login-card input:focus {
-      outline: none;
-      border-color: var(--navy);
-    }
+    .login-card input:focus { outline: none; border-color: var(--navy); }
 
     .login-card button {
       width: 100%;
@@ -129,16 +118,9 @@
 
     header img { height: 34px; }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
 
-    #submission-count {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.6);
-    }
+    #submission-count { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
 
     .btn {
       display: inline-flex;
@@ -151,45 +133,72 @@
       font-weight: 600;
       cursor: pointer;
       border: none;
-      transition: background 0.18s, opacity 0.18s;
+      transition: background 0.18s;
     }
 
-    .btn-export {
-      background: var(--orange);
-      color: #fff;
-    }
+    .btn-export  { background: var(--orange); color: #fff; }
     .btn-export:hover { background: #d07818; }
-
-    .btn-logout {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.8);
-    }
+    .btn-logout  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
     .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 20px 28px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(26,37,80,0.07);
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
 
     /* ── Filters ── */
     .filters-bar {
       background: var(--card);
       border-bottom: 1px solid var(--border);
-      padding: 14px 28px;
+      padding: 13px 28px;
       display: flex;
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
     }
 
+    .filter-group { display: flex; align-items: center; gap: 6px; }
+
     .filters-bar label {
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-right: 4px;
-    }
-
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .filters-bar select,
@@ -206,24 +215,14 @@
     }
 
     .filters-bar select:focus,
-    .filters-bar input[type="text"]:focus {
-      outline: none;
-      border-color: var(--navy);
-    }
+    .filters-bar input[type="text"]:focus { outline: none; border-color: var(--navy); }
 
-    #search-input { width: 200px; }
-
-    .filter-count {
-      margin-left: auto;
-      font-size: 0.8rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    /* ── Main content ── */
-    main { padding: 24px 28px; }
+    #search-input { width: 190px; }
+    .filter-count { margin-left: auto; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 
     /* ── Table ── */
+    main { padding: 20px 28px; }
+
     .table-wrap {
       background: var(--card);
       border-radius: 12px;
@@ -231,22 +230,15 @@
       overflow: hidden;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8125rem;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
 
-    thead {
-      background: var(--navy);
-      color: #fff;
-    }
+    thead { background: var(--navy); color: #fff; }
 
     th {
-      padding: 13px 14px;
+      padding: 12px 14px;
       text-align: left;
       font-weight: 600;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       white-space: nowrap;
@@ -256,8 +248,8 @@
     }
 
     th:hover { background: var(--navy-deep); }
-    th.sorted-asc::after  { content: ' ↑'; opacity: 0.8; }
-    th.sorted-desc::after { content: ' ↓'; opacity: 0.8; }
+    th.sorted-asc::after  { content: ' ↑'; opacity: 0.7; }
+    th.sorted-desc::after { content: ' ↓'; opacity: 0.7; }
 
     tbody tr {
       border-bottom: 1px solid var(--border);
@@ -269,24 +261,10 @@
     tbody tr:hover { background: #f5f6fc; }
     tbody tr.expanded { background: #eef0fb; }
 
-    td {
-      padding: 12px 14px;
-      color: var(--mid);
-      vertical-align: middle;
-    }
+    td { padding: 11px 14px; color: var(--mid); vertical-align: middle; }
 
-    td.id-col {
-      color: var(--muted);
-      font-size: 0.75rem;
-      width: 44px;
-    }
-
-    td.date-col {
-      white-space: nowrap;
-      color: var(--muted);
-      font-size: 0.75rem;
-      width: 130px;
-    }
+    td.id-col   { color: var(--muted); font-size: 0.75rem; width: 44px; }
+    td.date-col { white-space: nowrap; color: var(--muted); font-size: 0.75rem; width: 120px; }
 
     .pill {
       display: inline-block;
@@ -294,8 +272,6 @@
       border-radius: 20px;
       font-size: 0.72rem;
       font-weight: 600;
-      background: #e8eaf6;
-      color: var(--navy);
       white-space: nowrap;
     }
 
@@ -304,8 +280,29 @@
     .pill.worth    { background: #fff8e1; color: #e65100; }
     .pill.clients  { background: #fce4ec; color: #880e4f; }
 
+    /* Status pills — clickable */
+    .status-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .status-pill:hover  { opacity: 0.8; }
+    .status-pill:active { transform: scale(0.95); }
+
+    .status-New         { background: #e3f2fd; color: #1565c0; }
+    .status-Contacted   { background: #fff3e0; color: #e65100; }
+    .status-In-Progress { background: #f3e5f5; color: #6a1b9a; }
+    .status-Closed      { background: #e8f5e9; color: #2e7d32; }
+
     td.bottleneck-col {
-      max-width: 200px;
+      max-width: 180px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -314,15 +311,12 @@
     }
 
     /* ── Expanded row ── */
-    .expand-row td {
-      padding: 0;
-      background: #f7f8fd;
-    }
+    .expand-row td { padding: 0; background: #f7f8fd; }
 
     .expand-inner {
       padding: 20px 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 12px;
       border-top: 2px solid var(--orange);
     }
@@ -337,20 +331,11 @@
       margin-bottom: 4px;
     }
 
-    .expand-field p {
-      font-size: 0.875rem;
-      color: var(--text);
-      line-height: 1.5;
-    }
-
+    .expand-field p { font-size: 0.875rem; color: var(--text); line-height: 1.5; }
     .expand-field.full { grid-column: 1 / -1; }
 
-    /* ── Empty / loading states ── */
-    .state-row td {
-      padding: 60px 20px;
-      text-align: center;
-      color: var(--muted);
-    }
+    /* ── Empty / loading ── */
+    .state-row td { padding: 60px 20px; text-align: center; color: var(--muted); }
 
     .spinner-lg {
       width: 28px; height: 28px;
@@ -363,11 +348,13 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .filters-bar { padding: 12px 16px; }
-      main { padding: 16px; }
-      th, td { padding: 10px 10px; }
+    @media (max-width: 1000px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .stats-bar, .filters-bar, main { padding-left: 16px; padding-right: 16px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .col-hide { display: none; }
     }
   </style>
@@ -382,14 +369,14 @@
       <p>Sign in to view placement questionnaire responses</p>
       <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password" />
       <button id="login-btn">Sign In</button>
-      <div id="login-error">Incorrect password. Try again.</div>
+      <div id="login-error">Incorrect password. Please try again.</div>
     </div>
   </div>
 
   <!-- Dashboard -->
   <div id="dashboard">
     <header>
-      <img src="../FinalCycle-Logo.webp" alt="Final Cycle" style="filter: brightness(0) invert(1);" />
+      <img src="../FinalCycle-Logo.webp" alt="Final Cycle" style="filter:brightness(0) invert(1)" />
       <div class="header-right">
         <span id="submission-count"></span>
         <button class="btn btn-export" id="export-btn">⬇ Export CSV</button>
@@ -397,10 +384,34 @@
       </div>
     </header>
 
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">Total Submissions</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-sub" id="stat-week">— this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Top Revenue Tier</div>
+        <div class="stat-value" id="stat-rev-val" style="font-size:1.1rem;padding-top:4px">—</div>
+        <div class="stat-sub" id="stat-rev-pct"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Most Common Team Size</div>
+        <div class="stat-value" id="stat-team-val" style="font-size:1.4rem;padding-top:4px">—</div>
+        <div class="stat-sub" id="stat-team-pct"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pipeline</div>
+        <div class="stat-sub" id="stat-pipeline" style="font-size:0.8rem;margin-top:8px;line-height:1.8"></div>
+      </div>
+    </div>
+
+    <!-- Filters -->
     <div class="filters-bar">
       <div class="filter-group">
         <label>Search</label>
-        <input type="text" id="search-input" placeholder="Any field…" />
+        <input type="text" id="search-input" placeholder="Name, email…" />
       </div>
       <div class="filter-group">
         <label>Revenue</label>
@@ -424,14 +435,13 @@
         </select>
       </div>
       <div class="filter-group">
-        <label>Clients</label>
-        <select id="filter-clients">
+        <label>Status</label>
+        <select id="filter-status">
           <option value="">All</option>
-          <option>0–10</option>
-          <option>11–25</option>
-          <option>26–50</option>
-          <option>51–75</option>
-          <option>76+</option>
+          <option>New</option>
+          <option>Contacted</option>
+          <option>In Progress</option>
+          <option>Closed</option>
         </select>
       </div>
       <div class="filter-group">
@@ -441,7 +451,7 @@
           <option value="Stone Age">Stone Age</option>
           <option value="Filing Cabinet Era">Filing Cabinet Era</option>
           <option value="75% Digital">75% Digital</option>
-          <option value="Efficient &amp; Automated">Efficient &amp; Automated</option>
+          <option value="Efficient">Efficient &amp; Automated</option>
           <option value="Future of Tax">Future of Tax</option>
         </select>
       </div>
@@ -458,16 +468,16 @@
               <th data-col="name">Name</th>
               <th data-col="email" class="col-hide">Email</th>
               <th data-col="annual_revenue">Revenue</th>
-              <th data-col="team_members">Team</th>
-              <th data-col="firm_worth" class="col-hide">Worth</th>
+              <th data-col="team_members" class="col-hide">Team</th>
               <th data-col="client_count" class="col-hide">Clients</th>
               <th data-col="efficiency">Efficiency</th>
+              <th data-col="status">Status</th>
               <th data-col="bottleneck">Bottleneck</th>
             </tr>
           </thead>
           <tbody id="table-body">
             <tr class="state-row">
-              <td colspan="10"><div class="spinner-lg"></div>Loading submissions…</td>
+              <td colspan="10"><div class="spinner-lg"></div>Loading…</td>
             </tr>
           </tbody>
         </table>
@@ -479,19 +489,44 @@
 (function () {
   'use strict';
 
-  const PASS    = 'RHAMGMT1!';
-  const API_KEY = 'RHAMGMT1!';
-  const SESSION = 'fc_admin_auth';
+  const SESSION     = 'fc_admin_key';
+  const STATUSES    = ['New', 'Contacted', 'In Progress', 'Closed'];
 
   let allSubmissions = [];
   let filtered       = [];
   let sortCol        = 'id';
   let sortDir        = 'desc';
   let expandedId     = null;
+  let adminKey       = null;
 
   // ── Auth ──────────────────────────────────────────────────────────────────
 
-  function isAuthed() { return sessionStorage.getItem(SESSION) === '1'; }
+  function getKey()     { return sessionStorage.getItem(SESSION); }
+  function saveKey(k)   { sessionStorage.setItem(SESSION, k); adminKey = k; }
+  function clearKey()   { sessionStorage.removeItem(SESSION); adminKey = null; }
+
+  async function tryLogin() {
+    const pw = document.getElementById('pw-input').value;
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (res.ok) {
+      const { ok } = await res.json();
+      if (ok) { saveKey(pw); showDashboard(); return; }
+    }
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').select();
+  }
+
+  document.getElementById('login-btn').addEventListener('click', tryLogin);
+  document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+  document.getElementById('logout-btn').addEventListener('click', function () {
+    clearKey();
+    location.reload();
+  });
 
   function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
@@ -499,65 +534,79 @@
     loadSubmissions();
   }
 
-  document.getElementById('login-btn').addEventListener('click', tryLogin);
-  document.getElementById('pw-input').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') tryLogin();
-  });
+  const stored = getKey();
+  if (stored) { adminKey = stored; showDashboard(); }
 
-  function tryLogin() {
-    if (document.getElementById('pw-input').value === PASS) {
-      sessionStorage.setItem(SESSION, '1');
-      document.getElementById('login-error').style.display = 'none';
-      showDashboard();
-    } else {
-      document.getElementById('login-error').style.display = 'block';
-      document.getElementById('pw-input').select();
-    }
-  }
-
-  document.getElementById('logout-btn').addEventListener('click', function () {
-    sessionStorage.removeItem(SESSION);
-    location.reload();
-  });
-
-  if (isAuthed()) showDashboard();
-
-  // ── Load data ─────────────────────────────────────────────────────────────
+  // ── Load ──────────────────────────────────────────────────────────────────
 
   async function loadSubmissions() {
     try {
-      const res = await fetch('/api/submissions', {
-        headers: { 'X-Admin-Key': API_KEY }
-      });
+      const res  = await fetch('/api/submissions', { headers: { 'X-Admin-Key': adminKey } });
       const json = await res.json();
-      if (!json.success) throw new Error('API error');
+      if (res.status === 401) { clearKey(); location.reload(); return; }
+      if (!json.success) throw new Error();
       allSubmissions = json.submissions;
+      updateStats();
       document.getElementById('submission-count').textContent =
-        allSubmissions.length + ' total submission' + (allSubmissions.length !== 1 ? 's' : '');
+        allSubmissions.length + ' submission' + (allSubmissions.length !== 1 ? 's' : '');
       applyFilters();
-    } catch (e) {
+    } catch {
       document.getElementById('table-body').innerHTML =
-        '<tr class="state-row"><td colspan="10">Failed to load submissions. Please refresh.</td></tr>';
+        '<tr class="state-row"><td colspan="10">Failed to load. Please refresh.</td></tr>';
+    }
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+
+  function topOf(arr, key) {
+    const counts = {};
+    arr.forEach(s => { const v = s[key]; if (v) counts[v] = (counts[v] || 0) + 1; });
+    let top = '', max = 0;
+    Object.entries(counts).forEach(([k, v]) => { if (v > max) { max = v; top = k; } });
+    return { value: top, count: max, pct: arr.length ? Math.round(max / arr.length * 100) : 0 };
+  }
+
+  function updateStats() {
+    const n   = allSubmissions.length;
+    const now = Date.now();
+    const week = allSubmissions.filter(s => now - new Date(s.submitted_at).getTime() < 7*86400*1000).length;
+
+    document.getElementById('stat-total').textContent = n;
+    document.getElementById('stat-week').textContent  = week + ' this week';
+
+    if (n > 0) {
+      const rev  = topOf(allSubmissions, 'annual_revenue');
+      const team = topOf(allSubmissions, 'team_members');
+      document.getElementById('stat-rev-val').textContent  = rev.value  || '—';
+      document.getElementById('stat-rev-pct').textContent  = rev.value  ? rev.pct + '% of firms' : '';
+      document.getElementById('stat-team-val').textContent = team.value || '—';
+      document.getElementById('stat-team-pct').textContent = team.value ? team.pct + '% of firms' : '';
+
+      const pipeline = {};
+      STATUSES.forEach(s => pipeline[s] = 0);
+      allSubmissions.forEach(s => { if (pipeline[s.status] !== undefined) pipeline[s.status]++; });
+      document.getElementById('stat-pipeline').innerHTML =
+        STATUSES.map(s => `<span><strong style="color:var(--navy)">${pipeline[s]}</strong> ${s}</span>`).join(' &nbsp;·&nbsp; ');
     }
   }
 
   // ── Filters ───────────────────────────────────────────────────────────────
 
-  ['filter-revenue','filter-team','filter-clients','filter-efficiency','search-input']
+  ['filter-revenue','filter-team','filter-status','filter-efficiency','search-input']
     .forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
 
   function applyFilters() {
     const revenue    = document.getElementById('filter-revenue').value;
     const team       = document.getElementById('filter-team').value;
-    const clients    = document.getElementById('filter-clients').value;
+    const status     = document.getElementById('filter-status').value;
     const efficiency = document.getElementById('filter-efficiency').value;
     const search     = document.getElementById('search-input').value.toLowerCase().trim();
 
     filtered = allSubmissions.filter(function (s) {
-      if (revenue    && s.annual_revenue !== revenue)    return false;
-      if (team       && s.team_members   !== team)       return false;
-      if (clients    && s.client_count   !== clients)    return false;
-      if (efficiency && !s.efficiency.startsWith(efficiency)) return false;
+      if (revenue    && s.annual_revenue !== revenue)          return false;
+      if (team       && s.team_members   !== team)             return false;
+      if (status     && s.status         !== status)           return false;
+      if (efficiency && !s.efficiency.includes(efficiency))    return false;
       if (search) {
         const blob = Object.values(s).join(' ').toLowerCase();
         if (!blob.includes(search)) return false;
@@ -576,14 +625,9 @@
   document.querySelectorAll('th[data-col]').forEach(function (th) {
     th.addEventListener('click', function () {
       const col = th.dataset.col;
-      if (sortCol === col) {
-        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        sortCol = col;
-        sortDir = 'desc';
-      }
-      document.querySelectorAll('th').forEach(t =>
-        t.classList.remove('sorted-asc', 'sorted-desc'));
+      if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+      else { sortCol = col; sortDir = col === 'id' ? 'desc' : 'asc'; }
+      document.querySelectorAll('th').forEach(t => t.classList.remove('sorted-asc','sorted-desc'));
       th.classList.add('sorted-' + sortDir);
       sortAndRender();
     });
@@ -592,10 +636,8 @@
   function sortAndRender() {
     const dir = sortDir === 'asc' ? 1 : -1;
     const sorted = filtered.slice().sort(function (a, b) {
-      const av = a[sortCol] || '';
-      const bv = b[sortCol] || '';
       if (sortCol === 'id') return dir * (a.id - b.id);
-      return dir * av.localeCompare(bv);
+      return dir * (a[sortCol] || '').localeCompare(b[sortCol] || '');
     });
     renderTable(sorted);
   }
@@ -605,65 +647,91 @@
   function fmt(dt) {
     if (!dt) return '—';
     const d = new Date(dt);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' })
       + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
 
-  function esc(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function statusClass(s) {
+    return 'status-' + (s || 'New').replace(/\s+/g, '-');
   }
 
   function renderTable(rows) {
     const tbody = document.getElementById('table-body');
-
-    if (rows.length === 0) {
+    if (!rows.length) {
       tbody.innerHTML = '<tr class="state-row"><td colspan="10">No submissions match the current filters.</td></tr>';
       return;
     }
 
     tbody.innerHTML = rows.map(function (s) {
-      const isExpanded = expandedId === s.id;
-      const row = `<tr class="data-row ${isExpanded ? 'expanded' : ''}" data-id="${s.id}">
+      const isExp = expandedId === s.id;
+      const row = `<tr class="data-row${isExp?' expanded':''}" data-id="${s.id}">
         <td class="id-col">${s.id}</td>
         <td class="date-col">${fmt(s.submitted_at)}</td>
-        <td><strong>${esc(s.name) || '—'}</strong></td>
-        <td class="col-hide">${esc(s.email) ? `<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>` : '—'}</td>
-        <td><span class="pill revenue">${esc(s.annual_revenue) || '—'}</span></td>
-        <td><span class="pill team">${esc(s.team_members) || '—'}</span></td>
-        <td class="col-hide"><span class="pill worth">${esc(s.firm_worth) || '—'}</span></td>
-        <td class="col-hide"><span class="pill clients">${esc(s.client_count) || '—'}</span></td>
-        <td>${esc(s.efficiency) || '—'}</td>
-        <td class="bottleneck-col">${esc(s.bottleneck) || ''}</td>
+        <td><strong>${esc(s.name)||'—'}</strong></td>
+        <td class="col-hide">${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>`:'—'}</td>
+        <td><span class="pill revenue">${esc(s.annual_revenue)||'—'}</span></td>
+        <td class="col-hide"><span class="pill team">${esc(s.team_members)||'—'}</span></td>
+        <td class="col-hide"><span class="pill clients">${esc(s.client_count)||'—'}</span></td>
+        <td>${esc(s.efficiency)||'—'}</td>
+        <td><span class="status-pill ${statusClass(s.status)}" data-id="${s.id}" data-status="${esc(s.status||'New')}">${esc(s.status||'New')}</span></td>
+        <td class="bottleneck-col">${esc(s.bottleneck)||''}</td>
       </tr>`;
 
-      const detail = isExpanded ? `<tr class="expand-row" data-id="${s.id}">
-        <td colspan="10">
-          <div class="expand-inner">
-            <div class="expand-field"><label>Name</label><p>${esc(s.name)||'—'}</p></div>
-            <div class="expand-field"><label>Email</label><p>${esc(s.email) ? `<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>` : '—'}</p></div>
-            <div class="expand-field"><label>Phone</label><p>${esc(s.phone) ? `<a href="tel:${esc(s.phone)}" style="color:var(--navy)">${esc(s.phone)}</a>` : '—'}</p></div>
-            <div class="expand-field"><label>Annual Revenue</label><p>${esc(s.annual_revenue)||'—'}</p></div>
-            <div class="expand-field"><label>Team Members</label><p>${esc(s.team_members)||'—'}</p></div>
-            <div class="expand-field"><label>Firm Worth</label><p>${esc(s.firm_worth)||'—'}</p></div>
-            <div class="expand-field"><label>Client Count</label><p>${esc(s.client_count)||'—'}</p></div>
-            <div class="expand-field"><label>Tax Returns / Year</label><p>${esc(s.tax_returns)||'—'}</p></div>
-            <div class="expand-field"><label>Tax Software</label><p>${esc(s.tax_software)||'—'}</p></div>
-            <div class="expand-field"><label>Documentation Storage</label><p>${esc(s.documentation)||'—'}</p></div>
-            <div class="expand-field"><label>Operational Efficiency</label><p>${esc(s.efficiency)||'—'}</p></div>
-            <div class="expand-field full"><label>Bottleneck</label><p>${esc(s.bottleneck)||'<em style="color:var(--muted)">No response</em>'}</p></div>
-          </div>
-        </td>
+      const detail = isExp ? `<tr class="expand-row" data-id="${s.id}">
+        <td colspan="10"><div class="expand-inner">
+          <div class="expand-field"><label>Name</label><p>${esc(s.name)||'—'}</p></div>
+          <div class="expand-field"><label>Email</label><p>${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>`:'—'}</p></div>
+          <div class="expand-field"><label>Phone</label><p>${s.phone?`<a href="tel:${esc(s.phone)}" style="color:var(--navy)">${esc(s.phone)}</a>`:'—'}</p></div>
+          <div class="expand-field"><label>Annual Revenue</label><p>${esc(s.annual_revenue)||'—'}</p></div>
+          <div class="expand-field"><label>Team Members</label><p>${esc(s.team_members)||'—'}</p></div>
+          <div class="expand-field"><label>Firm Worth</label><p>${esc(s.firm_worth)||'—'}</p></div>
+          <div class="expand-field"><label>Client Count</label><p>${esc(s.client_count)||'—'}</p></div>
+          <div class="expand-field"><label>Tax Returns / Year</label><p>${esc(s.tax_returns)||'—'}</p></div>
+          <div class="expand-field"><label>Tax Software</label><p>${esc(s.tax_software)||'—'}</p></div>
+          <div class="expand-field"><label>Documentation</label><p>${esc(s.documentation)||'—'}</p></div>
+          <div class="expand-field"><label>Efficiency</label><p>${esc(s.efficiency)||'—'}</p></div>
+          <div class="expand-field full"><label>Bottleneck</label><p>${esc(s.bottleneck)||'<em style="color:var(--muted)">No response</em>'}</p></div>
+        </div></td>
       </tr>` : '';
 
       return row + detail;
     }).join('');
 
-    // Row click → expand/collapse
+    // Row click → expand (ignore clicks on status pill)
     tbody.querySelectorAll('tr.data-row').forEach(function (tr) {
-      tr.addEventListener('click', function () {
+      tr.addEventListener('click', function (e) {
+        if (e.target.closest('.status-pill')) return;
         const id = parseInt(tr.dataset.id);
         expandedId = expandedId === id ? null : id;
         sortAndRender();
+      });
+    });
+
+    // Status pill click → cycle status
+    tbody.querySelectorAll('.status-pill').forEach(function (pill) {
+      pill.addEventListener('click', async function (e) {
+        e.stopPropagation();
+        const id      = parseInt(pill.dataset.id);
+        const current = pill.dataset.status;
+        const next    = STATUSES[(STATUSES.indexOf(current) + 1) % STATUSES.length];
+
+        // Optimistic update
+        const sub = allSubmissions.find(s => s.id === id);
+        if (sub) sub.status = next;
+        pill.textContent  = next;
+        pill.dataset.status = next;
+        pill.className = 'status-pill ' + statusClass(next);
+        updateStats();
+
+        await fetch('/api/submissions', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': adminKey },
+          body: JSON.stringify({ id, status: next })
+        });
       });
     });
   }
@@ -671,28 +739,22 @@
   // ── CSV Export ────────────────────────────────────────────────────────────
 
   document.getElementById('export-btn').addEventListener('click', function () {
-    const headers = [
-      'ID','Submitted At','Name','Email','Phone',
-      'Annual Revenue','Team Members','Firm Worth',
-      'Client Count','Tax Returns','Tax Software','Documentation','Efficiency','Bottleneck'
-    ];
-    const rows = filtered.map(function (s) {
-      return [
-        s.id, s.submitted_at, s.name, s.email, s.phone,
-        s.annual_revenue, s.team_members, s.firm_worth,
-        s.client_count, s.tax_returns, s.tax_software, s.documentation,
-        s.efficiency, s.bottleneck
-      ].map(function (v) {
-        return '"' + (v || '').replace(/"/g, '""') + '"';
-      }).join(',');
-    });
-
+    const headers = ['ID','Submitted At','Name','Email','Phone','Status',
+      'Annual Revenue','Team Members','Firm Worth','Client Count',
+      'Tax Returns','Tax Software','Documentation','Efficiency','Bottleneck'];
+    const rows = filtered.map(s =>
+      [s.id, s.submitted_at, s.name, s.email, s.phone, s.status,
+       s.annual_revenue, s.team_members, s.firm_worth, s.client_count,
+       s.tax_returns, s.tax_software, s.documentation, s.efficiency, s.bottleneck
+      ].map(v => '"' + (v||'').replace(/"/g,'""') + '"').join(',')
+    );
     const csv  = [headers.join(','), ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'final-cycle-submissions-' + new Date().toISOString().slice(0,10) + '.csv';
+    const a    = Object.assign(document.createElement('a'), {
+      href: url,
+      download: 'final-cycle-' + new Date().toISOString().slice(0,10) + '.csv'
+    });
     a.click();
     URL.revokeObjectURL(url);
   });

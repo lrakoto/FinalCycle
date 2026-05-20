@@ -1,9 +1,13 @@
-const ADMIN_PASSWORD = 'RHAMGMT1!';
+function unauthorized() {
+  return Response.json({ error: 'Unauthorized' }, { status: 401 });
+}
+
+function checkAuth(request, env) {
+  return request.headers.get('X-Admin-Key') === env.ADMIN_PASSWORD;
+}
 
 export async function onRequestGet({ request, env }) {
-  if (request.headers.get('X-Admin-Key') !== ADMIN_PASSWORD) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!checkAuth(request, env)) return unauthorized();
 
   const url    = new URL(request.url);
   const limit  = parseInt(url.searchParams.get('limit')  || '500');
@@ -20,10 +24,23 @@ export async function onRequestGet({ request, env }) {
   return Response.json({ success: true, submissions: results, total });
 }
 
-export async function onRequestDelete({ request, env }) {
-  if (request.headers.get('X-Admin-Key') !== ADMIN_PASSWORD) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+export async function onRequestPatch({ request, env }) {
+  if (!checkAuth(request, env)) return unauthorized();
+
+  const { id, status } = await request.json();
+  const allowed = ['New', 'Contacted', 'In Progress', 'Closed'];
+  if (!allowed.includes(status)) {
+    return Response.json({ error: 'Invalid status' }, { status: 400 });
   }
+
+  await env.DB.prepare('UPDATE submissions SET status = ? WHERE id = ?')
+    .bind(status, id).run();
+
+  return Response.json({ success: true });
+}
+
+export async function onRequestDelete({ request, env }) {
+  if (!checkAuth(request, env)) return unauthorized();
 
   const { id } = await request.json();
   await env.DB.prepare('DELETE FROM submissions WHERE id = ?').bind(id).run();
