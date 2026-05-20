@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #ede7f6;
+  min-height: 100vh;
+  padding: 32px 16px 64px;
+  color: #202124;
+}
+
+.page-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── Form Card ── */
+.form-card {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.13), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Header ── */
+.form-header {
+  background: #1a237e;
+  color: #ffffff;
+  padding: 36px 28px 28px;
+  position: relative;
+}
+
+.form-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, #7c4dff 0%, #5c6bc0 100%);
+}
+
+.form-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.form-header .subtitle {
+  font-size: 0.8125rem;
+  color: #c5cae9;
+}
+
+/* ── Question Cards ── */
+.question-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin: 20px 16px;
+  padding: 24px 24px 20px;
+  border-left: 4px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.question-card:focus-within {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14), 0 2px 4px rgba(0, 0, 0, 0.07);
+  border-left-color: #5c6bc0;
+}
+
+.question-card.error {
+  border-left-color: #d93025 !important;
+}
+
+.question-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+
+.required {
+  color: #d93025;
+}
+
+/* ── Options (radio / checkbox rows) ── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+}
+
+.option label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #3c4043;
+  line-height: 1.45;
+  transition: background-color 0.15s;
+  user-select: none;
+}
+
+.option label:hover {
+  background-color: #f0ebfd;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #3949ab;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* ── "Other" text input ── */
+.other-input {
+  display: block;
+  width: calc(100% - 42px);
+  margin: 2px 0 6px 42px;
+  padding: 6px 2px 6px 4px;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #202124;
+  background: transparent;
+  transition: border-color 0.2s, border-width 0.1s;
+}
+
+.other-input:focus {
+  border-bottom: 2px solid #3949ab;
+}
+
+.other-input.hidden {
+  display: none;
+}
+
+/* ── Textarea (Q9) ── */
+.question-card textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #202124;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.55;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.question-card textarea:focus {
+  outline: none;
+  border-color: #3949ab;
+  box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.12);
+}
+
+.question-card textarea::placeholder {
+  color: #9aa0a6;
+}
+
+/* ── Validation error ── */
+.error-message {
+  display: none;
+  color: #d93025;
+  font-size: 0.78rem;
+  margin-top: 10px;
+  padding-left: 4px;
+}
+
+.question-card.error .error-message {
+  display: block;
+}
+
+/* ── Submit area ── */
+.submit-area {
+  padding: 8px 16px 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+#submit-btn {
+  background-color: #1a237e;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 36px;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.015em;
+  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
+}
+
+#submit-btn:hover:not(:disabled) {
+  background-color: #283593;
+}
+
+#submit-btn:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+#submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.privacy-note {
+  font-size: 0.75rem;
+  color: #80868b;
+}
+
+/* ── Spinner ── */
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Thank You ── */
+#thank-you {
+  padding: 60px 28px 64px;
+  text-align: center;
+}
+
+#thank-you.hidden {
+  display: none;
+}
+
+.ty-icon {
+  width: 60px;
+  height: 60px;
+  background: #e8eaf6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 22px;
+}
+
+#thank-you h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 12px;
+}
+
+#thank-you p {
+  font-size: 0.9375rem;
+  color: #5f6368;
+  line-height: 1.65;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  body {
+    padding: 0 0 48px;
+  }
+
+  .form-card {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .form-header {
+    padding: 28px 18px 22px;
+  }
+
+  .form-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .question-card {
+    margin: 16px 10px;
+    padding: 20px 16px 16px;
+  }
+
+  .submit-area {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 8px 10px 32px;
+  }
+
+  #submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
