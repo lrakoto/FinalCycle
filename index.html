@@ -412,6 +412,15 @@
 
     // ── Submit ─────────────────────────────────────────────────────────────
 
+    function postToGoogleSheet(payload) {
+      fetch('https://script.google.com/macros/s/AKfycbyOF58WtpPhhvvah78e3vKrTBscdPRPnWpaVIPpHSp2TdrVTOpKu2A6mnMsU_TY9l0Y/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      }).catch(function () {});
+    }
+
     async function postToWeb3Forms(payload) {
       var fd = new FormData();
       fd.append('access_key', document.querySelector('input[name="access_key"]').value);
@@ -434,7 +443,9 @@
       btn.innerHTML = '<span class="spinner"></span> Submitting…';
 
       try {
-        var ok = await postToWeb3Forms(buildPayload());
+        var payload = buildPayload();
+        postToGoogleSheet(payload);
+        var ok = await postToWeb3Forms(payload);
         if (!ok) throw new Error('rejected');
         document.getElementById('questionnaire-form').style.display = 'none';
         var ty = document.getElementById('thank-you');
