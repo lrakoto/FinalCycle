@@ -412,28 +412,6 @@
 
     // ── Submit ─────────────────────────────────────────────────────────────
 
-    function postToGoogleSheet(payload) {
-      fetch('https://script.google.com/macros/s/AKfycbyOF58WtpPhhvvah78e3vKrTBscdPRPnWpaVIPpHSp2TdrVTOpKu2A6mnMsU_TY9l0Y/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      }).catch(function () {});
-    }
-
-    async function postToWeb3Forms(payload) {
-      var fd = new FormData();
-      fd.append('access_key', document.querySelector('input[name="access_key"]').value);
-      fd.append('subject',    document.querySelector('input[name="subject"]').value);
-      fd.append('from_name',  document.querySelector('input[name="from_name"]').value);
-      Object.keys(payload).forEach(function (key) {
-        fd.append(key, payload[key]);
-      });
-      var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
-      var json = await res.json();
-      return json.success === true;
-    }
-
     document.getElementById('questionnaire-form').addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!validate()) return;
@@ -444,8 +422,12 @@
 
       try {
         var payload = buildPayload();
-        postToGoogleSheet(payload);
-        var ok = await postToWeb3Forms(payload);
+        var res  = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        var ok = res.ok;
         if (!ok) throw new Error('rejected');
         document.getElementById('questionnaire-form').style.display = 'none';
         var ty = document.getElementById('thank-you');

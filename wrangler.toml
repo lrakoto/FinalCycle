@@ -1,2 +1,7 @@
 name = "final-cycle-questionnaire"
 pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "final-cycle-submissions"
+database_id = "6c24135e-568e-41cf-a96d-3ba05ade4357"
