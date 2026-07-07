@@ -1,6 +1,6 @@
-# Peak Tax Partners – Placement Questionnaire
+# Future Firm Group – Placement Questionnaire
 
-Single-page intake form for Peak Tax Partners' accounting firm placement service. Built with plain HTML/CSS/JS, Cloudflare Pages + Functions, D1 database, Web3Forms notifications, and Resend confirmation emails.
+Single-page intake form for Future Firm Group's accounting firm placement service. Built with plain HTML/CSS/JS, Cloudflare Pages + Functions, D1 database, Web3Forms notifications, and Resend confirmation emails.
 
 ## Prerequisites
 
@@ -63,7 +63,7 @@ Cloudflare Pages will pick up the changes and deploy within ~30 seconds.
 ```
 ├── index.html                  # Questionnaire form
 ├── styles.css                  # Form styles
-├── PeakTax-Logo.svg            # Brand logo
+├── FutureFirmGroup-Logo.svg            # Brand logo
 ├── wrangler.toml               # Cloudflare config
 ├── schema.sql                  # D1 table schema
 ├── functions/
