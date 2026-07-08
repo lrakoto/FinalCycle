@@ -7,7 +7,7 @@ const CONFIRMATION_HTML = (name) => `<!DOCTYPE html>
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(26,37,80,.1)">
         <tr><td style="background:#1a2550;padding:0"><div style="height:5px;background:linear-gradient(90deg,#111c3d,#2d3e7a,#3b7cc4)"></div></td></tr>
         <tr><td style="padding:40px 40px 0;text-align:center">
-          <img src="https://futurefirmgroup.com/FutureFirmGroup-Logo.svg" alt="Future Firm Group" height="48" style="display:block;margin:0 auto 24px">
+          <img src="https://futurefirmgroup.com/FFG-Logo.webp" alt="Future Firm Group" height="48" style="display:block;margin:0 auto 24px">
           <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#1a2550">We've received your questionnaire</h1>
           <p style="margin:0;font-size:15px;color:#4e5470">Thank you for taking the time, ${name}.</p>
         </td></tr>

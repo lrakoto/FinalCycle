@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS submissions (
   tax_software    TEXT,
   documentation   TEXT,
   efficiency      TEXT,
-  bottleneck      TEXT
+  bottleneck      TEXT,
+  status          TEXT DEFAULT 'New'
 );

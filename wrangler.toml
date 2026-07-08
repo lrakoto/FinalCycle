@@ -1,7 +1,7 @@
 name = "final-cycle-questionnaire"
-pages_build_output_dir = "."
+pages_build_output_dir = "public"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "final-cycle-submissions"
-database_id = "6c24135e-568e-41cf-a96d-3ba05ade4357"
+database_id = "78f2a37e-22cb-4366-8d79-515ab26922fd"
