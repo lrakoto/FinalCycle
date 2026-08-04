@@ -3,3 +3,10 @@ CLAUDE.md
 .wrangler/
 .DS_Store
 .dev.vars
+
+# Design working files kept in the repo root (comps, mockups, source PSDs).
+# Shipped assets live in public/ and are tracked.
+/*.psd
+/*.png
+/*.jpg
+/*.jpeg
