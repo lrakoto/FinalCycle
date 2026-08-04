@@ -1,0 +1,55 @@
+name: Deploy to Cloudflare Pages
+
+# This project is a Direct Upload Pages project, which Cloudflare cannot
+# connect to a Git repo (that choice is fixed at project creation). This
+# workflow supplies the missing link: pushing to main ships to production,
+# so the repo and the live site cannot silently drift apart.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  # A newer push supersedes an in-flight deploy; never let two races land.
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Pinned to the major version used locally. Functions in functions/
+      # are bundled automatically; only public/ is served as static assets.
+      - name: Deploy
+        run: >
+          npx --yes wrangler@4 pages deploy public
+          --project-name final-cycle-questionnaire
+          --branch production
+        env:
+          CLOUDFLARE_API_TOKEN:  ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Deploying is not the same as being served. Confirm the live domain
+      # actually returns the commit we just shipped before calling it green.
+      - name: Verify live site
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 10); do
+            live=$(curl -sS --max-time 20 "https://futurefirmgroup.com/?ci=$GITHUB_SHA$i" | md5sum | cut -d' ' -f1)
+            want=$(md5sum public/index.html | cut -d' ' -f1)
+            if [ "$live" = "$want" ]; then
+              echo "Live site matches public/index.html ($want)"
+              exit 0
+            fi
+            echo "Attempt $i: live=$live want=$want — retrying in 10s"
+            sleep 10
+          done
+          echo "Live site never matched the deployed index.html" >&2
+          exit 1

@@ -1,0 +1,13 @@
+# styles.css keeps a stable filename, so a long browser TTL lets a visitor
+# pair freshly-revalidated HTML with a stale cached stylesheet for hours
+# after a deploy. Revalidate it on every visit, like the HTML.
+# Costs one conditional request per visit; the 304 is effectively free.
+/styles.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Logos are versioned by filename (FFG-Logo2.*), so a change ships under a
+# new name and can never be served stale. Cache them hard.
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
