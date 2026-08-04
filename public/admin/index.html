@@ -12,15 +12,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:      #1a2550;
-      --navy-deep: #111c3d;
-      --orange:    #e8891e;
-      --bg:        #f0f2f8;
+      --green:     #253622;
+      --green-deep:#172312;
+      --bronze:    #8a5a24;
+      --bg:        #f1f3ec;
       --card:      #ffffff;
-      --border:    #e1e4f0;
-      --text:      #1a1f36;
-      --mid:       #4e5470;
-      --muted:     #8890ab;
+      --border:    #e3e6dd;
+      --text:      #1b2118;
+      --mid:       #4f5648;
+      --muted:     #6f7664;
       --error:     #c0392b;
     }
 
@@ -44,7 +44,7 @@
     .login-card {
       background: var(--card);
       border-radius: 16px;
-      box-shadow: 0 8px 36px rgba(26,37,80,0.13);
+      box-shadow: 0 8px 36px rgba(30,42,26,0.13);
       padding: 48px 40px 40px;
       width: 100%;
       max-width: 380px;
@@ -58,7 +58,7 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--navy);
+      color: var(--green);
       margin-bottom: 6px;
     }
 
@@ -76,12 +76,12 @@
       transition: border-color 0.2s;
     }
 
-    .login-card input:focus { outline: none; border-color: var(--navy); }
+    .login-card input:focus { outline: none; border-color: var(--green); }
 
     .login-card button {
       width: 100%;
       padding: 13px;
-      background: var(--navy);
+      background: var(--green);
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -92,7 +92,7 @@
       transition: background 0.2s;
     }
 
-    .login-card button:hover { background: var(--orange); }
+    .login-card button:hover { background: var(--bronze); }
 
     #login-error {
       color: var(--error);
@@ -105,13 +105,13 @@
     #dashboard { display: none; }
 
     header {
-      background: var(--navy);
+      background: var(--green);
       padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 60px;
-      box-shadow: 0 2px 12px rgba(26,37,80,0.2);
+      box-shadow: 0 2px 12px rgba(30,42,26,0.2);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -137,8 +137,8 @@
       transition: background 0.18s;
     }
 
-    .btn-export  { background: var(--orange); color: #fff; }
-    .btn-export:hover { background: #d07818; }
+    .btn-export  { background: var(--bronze); color: #fff; }
+    .btn-export:hover { background: #6f4a1d; }
     .btn-logout  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
     .btn-logout:hover { background: rgba(255,255,255,0.2); }
 
@@ -156,7 +156,7 @@
       background: var(--card);
       border-radius: 10px;
       padding: 16px 18px;
-      box-shadow: 0 1px 4px rgba(26,37,80,0.07);
+      box-shadow: 0 1px 4px rgba(30,42,26,0.07);
     }
 
     .stat-card .stat-label {
@@ -171,7 +171,7 @@
     .stat-card .stat-value {
       font-size: 1.75rem;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--green);
       line-height: 1;
       margin-bottom: 4px;
     }
@@ -216,7 +216,7 @@
     }
 
     .filters-bar select:focus,
-    .filters-bar input[type="text"]:focus { outline: none; border-color: var(--navy); }
+    .filters-bar input[type="text"]:focus { outline: none; border-color: var(--green); }
 
     #search-input { width: 190px; }
     .filter-count { margin-left: auto; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
@@ -227,13 +227,13 @@
     .table-wrap {
       background: var(--card);
       border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(26,37,80,0.08);
+      box-shadow: 0 2px 12px rgba(30,42,26,0.08);
       overflow: hidden;
     }
 
     table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
 
-    thead { background: var(--navy); color: #fff; }
+    thead { background: var(--green); color: #fff; }
 
     th {
       padding: 12px 14px;
@@ -248,7 +248,7 @@
       transition: background 0.15s;
     }
 
-    th:hover { background: var(--navy-deep); }
+    th:hover { background: var(--green-deep); }
     th.sorted-asc::after  { content: ' ↑'; opacity: 0.7; }
     th.sorted-desc::after { content: ' ↓'; opacity: 0.7; }
 
@@ -259,8 +259,8 @@
     }
 
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #f5f6fc; }
-    tbody tr.expanded { background: #eef0fb; }
+    tbody tr:hover { background: #f5f6f0; }
+    tbody tr.expanded { background: #eef1e8; }
 
     td { padding: 11px 14px; color: var(--mid); vertical-align: middle; }
 
@@ -316,7 +316,7 @@
       background: var(--card);
       border: 1.5px solid var(--border);
       border-radius: 9px;
-      box-shadow: 0 6px 20px rgba(26,37,80,0.15);
+      box-shadow: 0 6px 20px rgba(30,42,26,0.15);
       overflow: hidden;
       min-width: 140px;
     }
@@ -360,14 +360,14 @@
     }
 
     /* ── Expanded row ── */
-    .expand-row td { padding: 0; background: #f7f8fd; }
+    .expand-row td { padding: 0; background: #f7f8f2; }
 
     .expand-inner {
       padding: 20px 24px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 12px;
-      border-top: 2px solid var(--orange);
+      border-top: 2px solid var(--bronze);
     }
 
     .expand-field label {
@@ -389,7 +389,7 @@
     .spinner-lg {
       width: 28px; height: 28px;
       border: 3px solid var(--border);
-      border-top-color: var(--navy);
+      border-top-color: var(--green);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto 14px;
@@ -635,7 +635,7 @@
       STATUSES.forEach(s => pipeline[s] = 0);
       allSubmissions.forEach(s => { if (pipeline[s.status] !== undefined) pipeline[s.status]++; });
       document.getElementById('stat-pipeline').innerHTML =
-        STATUSES.map(s => `<span><strong style="color:var(--navy)">${pipeline[s]}</strong> ${s}</span>`).join(' &nbsp;·&nbsp; ');
+        STATUSES.map(s => `<span><strong style="color:var(--green)">${pipeline[s]}</strong> ${s}</span>`).join(' &nbsp;·&nbsp; ');
     }
   }
 
@@ -721,7 +721,7 @@
         <td class="id-col">${s.id}</td>
         <td class="date-col">${fmt(s.submitted_at)}</td>
         <td><strong>${esc(s.name)||'—'}</strong></td>
-        <td class="col-hide">${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>`:'—'}</td>
+        <td class="col-hide">${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--green)">${esc(s.email)}</a>`:'—'}</td>
         <td><span class="pill revenue">${esc(s.annual_revenue)||'—'}</span></td>
         <td class="col-hide"><span class="pill team">${esc(s.team_members)||'—'}</span></td>
         <td class="col-hide"><span class="pill clients">${esc(s.client_count)||'—'}</span></td>
@@ -740,8 +740,8 @@
       const detail = isExp ? `<tr class="expand-row" data-id="${s.id}">
         <td colspan="10"><div class="expand-inner">
           <div class="expand-field"><label>Name</label><p>${esc(s.name)||'—'}</p></div>
-          <div class="expand-field"><label>Email</label><p>${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--navy)">${esc(s.email)}</a>`:'—'}</p></div>
-          <div class="expand-field"><label>Phone</label><p>${s.phone?`<a href="tel:${esc(s.phone)}" style="color:var(--navy)">${esc(s.phone)}</a>`:'—'}</p></div>
+          <div class="expand-field"><label>Email</label><p>${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--green)">${esc(s.email)}</a>`:'—'}</p></div>
+          <div class="expand-field"><label>Phone</label><p>${s.phone?`<a href="tel:${esc(s.phone)}" style="color:var(--green)">${esc(s.phone)}</a>`:'—'}</p></div>
           <div class="expand-field"><label>Annual Revenue</label><p>${esc(s.annual_revenue)||'—'}</p></div>
           <div class="expand-field"><label>Team Members</label><p>${esc(s.team_members)||'—'}</p></div>
           <div class="expand-field"><label>Firm Worth</label><p>${esc(s.firm_worth)||'—'}</p></div>

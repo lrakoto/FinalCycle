@@ -1,29 +1,29 @@
 const CONFIRMATION_HTML = (name) => `<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#eaecf5;font-family:'Helvetica Neue',Arial,sans-serif">
+<body style="margin:0;padding:0;background:#eceee7;font-family:'Helvetica Neue',Arial,sans-serif">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(26,37,80,.1)">
-        <tr><td style="background:#1a2550;padding:0"><div style="height:5px;background:linear-gradient(90deg,#111c3d,#2d3e7a,#3b7cc4)"></div></td></tr>
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(30,42,26,.1)">
+        <tr><td style="background:#253622;padding:0"><div style="height:5px;background:linear-gradient(90deg,#172312,#3a4f33,#9c6529)"></div></td></tr>
         <tr><td style="padding:40px 40px 0;text-align:center">
           <img src="https://futurefirmgroup.com/FFG-Logo2.png" alt="Future Firm Group" height="48" style="display:block;margin:0 auto 24px">
-          <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#1a2550">We've received your questionnaire</h1>
-          <p style="margin:0;font-size:15px;color:#4e5470">Thank you for taking the time, ${name}.</p>
+          <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#253622">We've received your questionnaire</h1>
+          <p style="margin:0;font-size:15px;color:#4f5648">Thank you for taking the time, ${name}.</p>
         </td></tr>
         <tr><td style="padding:32px 40px">
-          <p style="margin:0 0 16px;font-size:15px;color:#4e5470;line-height:1.7">
-            Our team will review your responses and reach out within <strong style="color:#1a2550">1–2 business days</strong> to discuss next steps.
+          <p style="margin:0 0 16px;font-size:15px;color:#4f5648;line-height:1.7">
+            Our team will review your responses and reach out within <strong style="color:#253622">1–2 business days</strong> to discuss next steps.
           </p>
-          <p style="margin:0;font-size:15px;color:#4e5470;line-height:1.7">
+          <p style="margin:0;font-size:15px;color:#4f5648;line-height:1.7">
             In the meantime, if you have any questions feel free to reply directly to this email.
           </p>
         </td></tr>
         <tr><td style="padding:0 40px 40px;text-align:center">
-          <div style="border-top:1px solid #e1e4f0;padding-top:24px">
-            <p style="margin:0;font-size:12px;color:#8890ab">
+          <div style="border-top:1px solid #e3e6dd;padding-top:24px">
+            <p style="margin:0;font-size:12px;color:#6f7664">
               Future Firm Group &nbsp;·&nbsp; Placement Services<br>
-              <a href="https://futurefirmgroup.com" style="color:#1a2550">futurefirmgroup.com</a>
+              <a href="https://futurefirmgroup.com" style="color:#253622">futurefirmgroup.com</a>
             </p>
           </div>
         </td></tr>
