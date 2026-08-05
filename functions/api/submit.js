@@ -61,6 +61,21 @@ export async function onRequestPost({ request, env }) {
       data['Biggest Operational Bottleneck'] || ''
     ).run();
 
+    // Notifications are best-effort. The lead is already durable in D1, so a
+    // failing mail provider must never turn a saved submission into an error
+    // for the applicant. Failures are logged instead of thrown — read them
+    // with `wrangler pages deployment tail --project-name <project>`.
+    const notify = async (label, send) => {
+      try {
+        const res = await send();
+        if (!res.ok) {
+          console.error(`[${label}] ${res.status} ${res.statusText}: ${await res.text()}`);
+        }
+      } catch (err) {
+        console.error(`[${label}] request threw: ${err.message}`);
+      }
+    };
+
     // Management notification via Web3Forms
     const fd = new FormData();
     fd.append('access_key',  'a7a88086-f7df-4478-a0a2-285be6f5cc3f');
@@ -68,11 +83,16 @@ export async function onRequestPost({ request, env }) {
     fd.append('from_name',   'Future Firm Group Questionnaire');
     fd.append('replyto',     data['Email'] || 'management@roberthalltaxes.com');
     Object.entries(data).forEach(([k, v]) => fd.append(k, v));
-    await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+    await notify('web3forms', () =>
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }));
 
     // Confirmation email to submitter via Resend
-    if (data['Email'] && env.RESEND_API_KEY) {
-      await fetch('https://api.resend.com/emails', {
+    if (!data['Email']) {
+      console.warn('[resend] submission has no email address — confirmation skipped');
+    } else if (!env.RESEND_API_KEY) {
+      console.error('[resend] RESEND_API_KEY is not set — confirmation skipped');
+    } else {
+      await notify('resend', () => fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${env.RESEND_API_KEY}`,
@@ -84,7 +104,7 @@ export async function onRequestPost({ request, env }) {
           subject: 'We received your questionnaire – Future Firm Group',
           html:    CONFIRMATION_HTML(data['Name'] || 'there')
         })
-      });
+      }));
     }
 
     return Response.json({ success: true });
