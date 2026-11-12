@@ -227,9 +227,10 @@
       font-size: 0.8125rem;
       color: var(--text);
       background: var(--bg);
-      cursor: pointer;
       transition: border-color 0.18s;
     }
+
+    .filters-bar select { cursor: pointer; }
 
     .filters-bar select:focus,
     .filters-bar input[type="text"]:focus { outline: none; border-color: var(--green); }
@@ -259,11 +260,11 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       white-space: nowrap;
-      cursor: pointer;
       user-select: none;
       transition: background 0.15s;
     }
 
+    th[data-col] { cursor: pointer; }
     th[data-col]:hover { background: var(--green-deep); }
     th.sorted-asc::after  { content: ' ↑'; opacity: 0.7; }
     th.sorted-desc::after { content: ' ↓'; opacity: 0.7; }
@@ -271,11 +272,10 @@
     tbody tr {
       border-bottom: 1px solid var(--border);
       transition: background 0.15s;
-      cursor: pointer;
     }
 
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #f5f6f0; }
+    tbody tr.data-row:hover { background: #f5f6f0; }
     tbody tr.expanded { background: #eef1e8; }
 
     td { padding: 11px 14px; color: var(--mid); vertical-align: middle; }
@@ -290,8 +290,9 @@
       font: inherit;
       font-weight: 700;
       text-align: left;
-      cursor: pointer;
     }
+
+    .detail-toggle:enabled { cursor: pointer; }
 
     .pill {
       display: inline-block;
@@ -322,17 +323,34 @@
       font-family: inherit;
       font-size: 0.72rem;
       font-weight: 700;
-      cursor: pointer;
       text-align: center;
       user-select: none;
       white-space: nowrap;
       transition: opacity 0.15s;
     }
 
-    .status-pill:hover  { opacity: 0.82; }
+    button.status-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding-inline: 5px;
+      cursor: pointer;
+    }
+
+    button.status-pill::after {
+      content: '';
+      flex: none;
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-1px) rotate(45deg);
+    }
+
+    button.status-pill[aria-expanded="true"]::after { transform: translateY(1px) rotate(225deg); }
+    button.status-pill:hover:not(:disabled) { opacity: 0.82; }
     .status-pill:disabled { opacity: 0.55; cursor: default; }
-    .status-readonly { cursor: default; }
-    .status-readonly:hover { opacity: 1; }
 
     .status-New         { background: #e3f2fd; color: #1565c0; }
     .status-Contacted   { background: #fff3e0; color: #e65100; }
@@ -350,7 +368,7 @@
       min-width: 140px;
     }
 
-    .status-menu.hidden { display: none; }
+    .status-pill[aria-expanded="false"] + .status-menu { display: none; }
 
     .status-menu li {
       list-style: none;
@@ -389,7 +407,6 @@
     }
 
     .actions-col { white-space: nowrap; }
-    th.actions-col { cursor: default; }
 
     .row-action {
       padding: 5px 8px;
@@ -865,11 +882,11 @@
         <td class="compact-hide">${esc(s.efficiency)||'—'}</td>
         <td class="status-col">
           ${currentView === 'active' ? `<div class="status-wrap" data-id="${s.id}">
-            <button class="status-pill ${statusClass(status)}" type="button" ${disabled}>${esc(status)}</button>
-            <ul class="status-menu hidden">
+            <button class="status-pill ${statusClass(status)}" type="button" aria-expanded="false" ${disabled}>${esc(status)}</button>
+            <ul class="status-menu">
               ${STATUSES.map(st => `<li data-value="${st}" class="${st === status ? 'current' : ''}"><span class="status-dot dot-${st.replace(/\s+/g,'-')}"></span>${st}</li>`).join('')}
             </ul>
-          </div>` : `<span class="status-pill status-readonly ${statusClass(status)}">${esc(status)}</span>`}
+          </div>` : `<span class="status-pill ${statusClass(status)}">${esc(status)}</span>`}
         </td>
         <td class="bottleneck-col compact-hide">${esc(s.bottleneck)||''}</td>
         <td class="actions-col">${rowActions(disabled)}</td>
@@ -917,17 +934,18 @@
 
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        // Close any other open menus
-        tbody.querySelectorAll('.status-menu').forEach(function (m) {
-          if (m !== menu) m.classList.add('hidden');
-        });
-        if (menu.classList.contains('hidden')) {
-          const r = btn.getBoundingClientRect();
-          menu.style.top  = (r.bottom + 6) + 'px';
-          menu.style.left = r.left + 'px';
-          menu.classList.remove('hidden');
-        } else {
-          menu.classList.add('hidden');
+        const opening = btn.getAttribute('aria-expanded') === 'false';
+        closeStatusMenus();
+        if (opening) {
+          btn.setAttribute('aria-expanded', 'true');
+          const rect = btn.getBoundingClientRect();
+          const { clientWidth, clientHeight } = document.documentElement;
+          let top = rect.bottom + 6;
+          if (top + menu.offsetHeight > clientHeight - 8) {
+            top = Math.max(8, rect.top - menu.offsetHeight - 6);
+          }
+          menu.style.top = top + 'px';
+          menu.style.left = Math.max(8, Math.min(rect.left, clientWidth - menu.offsetWidth - 8)) + 'px';
         }
       });
 
@@ -936,7 +954,7 @@
           e.stopPropagation();
           const id     = parseInt(wrap.dataset.id);
           const status = li.dataset.value;
-          menu.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
 
           const sub = allSubmissions.find(s => s.id === id);
           if (status !== (sub.status || 'New')) {
@@ -947,9 +965,12 @@
     });
   }
 
-  document.addEventListener('click', function () {
-    tbody.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
-  });
+  function closeStatusMenus() {
+    tbody.querySelectorAll('.status-pill[aria-expanded="true"]')
+      .forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+  }
+
+  document.addEventListener('click', closeStatusMenus);
 
   tbody.addEventListener('click', async function (e) {
     const button = e.target.closest('.row-action');
