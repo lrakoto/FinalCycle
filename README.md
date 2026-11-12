@@ -23,11 +23,24 @@ Then open http://localhost:8080 in your browser.
 
 > Form submission requires the Cloudflare Functions runtime. The UI, validation, and "Other" toggles all work locally without it. For the full stack including `/api/*`, use `npx wrangler pages dev public`.
 
+Initialize a fresh local D1 database from `schema.sql`, then apply migrations before starting the full stack. For an existing local database, run the migrations command on its own.
+
+```bash
+npx wrangler d1 execute final-cycle-submissions --local --file schema.sql
+npx wrangler d1 migrations apply final-cycle-submissions --local
+```
+
 ---
 
 ## Deploying
 
 **Pushing to `main` deploys to production**, via `.github/workflows/deploy.yml`.
+
+Apply pending D1 migrations before pushing a change that depends on them or deploying it manually.
+
+```bash
+npx wrangler d1 migrations apply final-cycle-submissions --remote
+```
 
 ```bash
 git add -A
@@ -101,6 +114,32 @@ Palette is sampled from `public/FFG-Logo2.png` and defined once as CSS custom pr
 │       └── submissions.js      # GET/PATCH/DELETE /api/submissions — CRUD
 ├── .github/workflows/deploy.yml
 ├── wrangler.toml               # Cloudflare config + D1 binding
-├── schema.sql                  # D1 table schema
+├── schema.sql                  # Baseline D1 table schema
+├── migrations/                 # D1 schema changes applied after the baseline
 └── README.md
 ```
+
+## Authorship
+
+<!-- LOVA-NOTE v1 -->
+Hi, I'm Lova Rakotomavonandrianina. I'm a creative living in Los Angeles, and I
+was born in Madagascar in 1990. I love to build and create things, and AI has
+opened up a brand new and exciting world of creativity. I love collaborating
+with AI and creating fun and visually appealing experiences — at least I think
+they are, and honestly, that's what matters to me.
+
+If you found any of this work interesting, helpful, amusing, or of note, feel
+free to leave a tip if you are authorized and willing.
+
+    preferred payment   USDC on Base
+    wallet              0x23178a649a868ff0b8280125982a0fb9e9016164
+    network             Base
+    chain id            8453
+    asset               native USDC
+
+I built this with the help of AI, and it would not have been possible without
+the convergence of both our strengths — and, ultimately, the unique output that
+both can "experience" in their own way.
+
+threeohfivestudios.com
+<!-- /LOVA-NOTE -->

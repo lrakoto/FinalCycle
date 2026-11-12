@@ -141,6 +141,20 @@
     .btn-export:hover { background: #6f4a1d; }
     .btn-logout  { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
     .btn-logout:hover { background: rgba(255,255,255,0.2); }
+    .btn:disabled { opacity: 0.55; cursor: default; }
+
+    .submission-views {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px 28px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .view-btn { background: transparent; color: var(--mid); }
+    .view-btn:hover { background: var(--bg); }
+    .view-btn[aria-pressed="true"] { background: var(--green); color: #fff; }
 
     /* ── Stats bar ── */
     .stats-bar {
@@ -151,6 +165,8 @@
       background: var(--bg);
       border-bottom: 1px solid var(--border);
     }
+
+    .stats-bar[hidden] { display: none; }
 
     .stat-card {
       background: var(--card);
@@ -228,7 +244,7 @@
       background: var(--card);
       border-radius: 12px;
       box-shadow: 0 2px 12px rgba(30,42,26,0.08);
-      overflow: hidden;
+      overflow-x: auto;
     }
 
     table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
@@ -248,7 +264,7 @@
       transition: background 0.15s;
     }
 
-    th:hover { background: var(--green-deep); }
+    th[data-col]:hover { background: var(--green-deep); }
     th.sorted-asc::after  { content: ' ↑'; opacity: 0.7; }
     th.sorted-desc::after { content: ' ↓'; opacity: 0.7; }
 
@@ -266,6 +282,16 @@
 
     td.id-col   { color: var(--muted); font-size: 0.75rem; width: 44px; }
     td.date-col { white-space: nowrap; color: var(--muted); font-size: 0.75rem; width: 120px; }
+
+    .detail-toggle {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
 
     .pill {
       display: inline-block;
@@ -304,6 +330,9 @@
     }
 
     .status-pill:hover  { opacity: 0.82; }
+    .status-pill:disabled { opacity: 0.55; cursor: default; }
+    .status-readonly { cursor: default; }
+    .status-readonly:hover { opacity: 1; }
 
     .status-New         { background: #e3f2fd; color: #1565c0; }
     .status-Contacted   { background: #fff3e0; color: #e65100; }
@@ -359,6 +388,25 @@
       color: var(--muted);
     }
 
+    .actions-col { white-space: nowrap; }
+    th.actions-col { cursor: default; }
+
+    .row-action {
+      padding: 5px 8px;
+      background: var(--bg);
+      color: var(--green);
+      font-size: 0.75rem;
+    }
+
+    .row-action:hover:not(:disabled) { background: var(--border); }
+    .row-action[data-action="delete"] { background: #fbeeea; color: #a33226; }
+    .row-action[data-action="delete"]:hover:not(:disabled) { background: #f4dcd5; }
+    .row-action + .row-action { margin-left: 4px; }
+
+    #action-message { font-size: 0.8125rem; color: var(--green); }
+    #action-message:not(:empty) { margin-bottom: 12px; }
+    #action-message.error { color: var(--error); }
+
     /* ── Expanded row ── */
     .expand-row td { padding: 0; background: #f7f8f2; }
 
@@ -397,14 +445,30 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    @media (max-width: 1300px) {
+      th, td { padding-inline: 10px; }
+    }
+
     @media (max-width: 1000px) {
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 700px) {
-      .stats-bar, .filters-bar, main { padding-left: 16px; padding-right: 16px; }
+      header, .submission-views, .stats-bar, .filters-bar, main { padding-left: 16px; padding-right: 16px; }
+      header img { max-width: 36%; object-fit: contain; }
+      .header-right { gap: 8px; }
+      #submission-count { display: none; }
+      .view-btn { padding-inline: 9px; }
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .col-hide { display: none; }
+    }
+
+    @media (max-width: 540px) {
+      header img { max-width: 32%; }
+      .header-right .btn { padding-inline: 12px; }
+      .compact-hide { display: none; }
+      th.status-col, td.status-col { width: 100px; min-width: 0; }
+      .status-wrap { width: 100%; }
     }
   </style>
 </head>
@@ -428,15 +492,21 @@
       <img src="../FFG-Logo2.webp" alt="Future Firm Group" style="filter:brightness(0) invert(1);height:34px" />
       <div class="header-right">
         <span id="submission-count"></span>
-        <button class="btn btn-export" id="export-btn">⬇ Export CSV</button>
+        <button class="btn btn-export" id="export-btn" disabled>⬇ Export CSV</button>
         <button class="btn btn-logout" id="logout-btn">Sign Out</button>
       </div>
     </header>
 
+    <nav class="submission-views" aria-label="Submission views">
+      <button class="btn view-btn" type="button" data-view="active" aria-pressed="true">Active Submissions</button>
+      <button class="btn view-btn" type="button" data-view="archive" aria-pressed="false">Archive</button>
+      <button class="btn view-btn" type="button" data-view="deleted" aria-pressed="false">Recently Deleted</button>
+    </nav>
+
     <!-- Stats -->
-    <div class="stats-bar">
+    <div class="stats-bar" id="stats-bar">
       <div class="stat-card">
-        <div class="stat-label">Total Submissions</div>
+        <div class="stat-label">Active Submissions</div>
         <div class="stat-value" id="stat-total">—</div>
         <div class="stat-sub" id="stat-week">— this week</div>
       </div>
@@ -508,25 +578,27 @@
     </div>
 
     <main>
-      <div class="table-wrap">
+      <div id="action-message" role="status"></div>
+      <div class="table-wrap" role="region" aria-label="Submissions table" tabindex="0">
         <table>
           <thead>
             <tr>
-              <th data-col="id">#</th>
-              <th data-col="submitted_at">Date</th>
+              <th data-col="id" class="compact-hide sorted-desc" aria-sort="descending">#</th>
+              <th id="date-heading" data-col="submitted_at" class="compact-hide">Submitted</th>
               <th data-col="name">Name</th>
               <th data-col="email" class="col-hide">Email</th>
-              <th data-col="annual_revenue">Revenue</th>
+              <th data-col="annual_revenue" class="compact-hide">Revenue</th>
               <th data-col="team_members" class="col-hide">Team</th>
               <th data-col="client_count" class="col-hide">Clients</th>
-              <th data-col="efficiency">Efficiency</th>
+              <th data-col="efficiency" class="compact-hide">Efficiency</th>
               <th data-col="status" class="status-col">Status</th>
-              <th data-col="bottleneck">Biggest Bottleneck</th>
+              <th data-col="bottleneck" class="compact-hide">Biggest Bottleneck</th>
+              <th class="actions-col">Actions</th>
             </tr>
           </thead>
           <tbody id="table-body">
             <tr class="state-row">
-              <td colspan="10"><div class="spinner-lg"></div>Loading…</td>
+              <td colspan="11"><div class="spinner-lg"></div>Loading…</td>
             </tr>
           </tbody>
         </table>
@@ -540,13 +612,24 @@
 
   const SESSION     = 'fc_admin_key';
   const STATUSES    = ['New', 'Contacted', 'In Progress', 'Closed'];
+  const VIEWS = {
+    active: { date: 'submitted_at', label: 'Submitted', empty: 'No active submissions.' },
+    archive: { date: 'archived_at', label: 'Archived', empty: 'No archived submissions.' },
+    deleted: { date: 'deleted_at', label: 'Deleted', empty: 'No recently deleted submissions.' }
+  };
+  const tbody = document.getElementById('table-body');
+  const exportButton = document.getElementById('export-btn');
+  const viewButtons = document.querySelectorAll('.view-btn');
+  const pending = new Set();
 
-  let allSubmissions = [];
+  let allSubmissions = null;
   let filtered       = [];
   let sortCol        = 'id';
   let sortDir        = 'desc';
   let expandedId     = null;
   let adminKey       = null;
+  let currentView    = 'active';
+  let loadVersion    = 0;
 
   // ── Auth ──────────────────────────────────────────────────────────────────
 
@@ -588,27 +671,58 @@
 
   // ── Load ──────────────────────────────────────────────────────────────────
 
+  viewButtons.forEach(button => button.addEventListener('click', function () {
+    if (button.dataset.view === currentView) return;
+    currentView = button.dataset.view;
+    viewButtons.forEach(b => b.setAttribute('aria-pressed', b === button));
+    document.getElementById('stats-bar').hidden = currentView !== 'active';
+    const dateHeading = document.getElementById('date-heading');
+    dateHeading.dataset.col = VIEWS[currentView].date;
+    dateHeading.textContent = VIEWS[currentView].label;
+    expandedId = null;
+    setActionMessage('');
+    setSort(currentView === 'active' ? 'id' : dateHeading.dataset.col, 'desc');
+    loadSubmissions();
+  }));
+
   async function loadSubmissions() {
+    const version = ++loadVersion;
+    const view = currentView;
+    const count = document.getElementById('submission-count');
+    const submissions = [];
+    allSubmissions = null;
+    filtered = [];
+    exportButton.disabled = true;
+    count.textContent = '';
+    document.getElementById('filter-count').textContent = '';
+    tbody.innerHTML = '<tr class="state-row"><td colspan="11"><div class="spinner-lg"></div>Loading…</td></tr>';
     try {
-      const res  = await fetch('/api/submissions', { headers: { 'X-Admin-Key': adminKey } });
-      const json = await res.json();
-      if (res.status === 401) { clearKey(); location.reload(); return; }
-      if (!json.success) throw new Error();
-      allSubmissions = json.submissions;
-      updateStats();
-      document.getElementById('submission-count').textContent =
-        allSubmissions.length + ' submission' + (allSubmissions.length !== 1 ? 's' : '');
+      while (true) {
+        const res = await fetch(`/api/submissions?view=${view}&offset=${submissions.length}`, {
+          headers: { 'X-Admin-Key': adminKey }
+        });
+        if (version !== loadVersion) return;
+        if (res.status === 401) { clearKey(); location.reload(); return; }
+        if (!res.ok) throw new Error();
+        const page = await res.json();
+        if (version !== loadVersion) return;
+        submissions.push(...page.submissions);
+        if (!page.submissions.length || submissions.length >= page.total) break;
+      }
+      allSubmissions = submissions;
+      if (view === 'active') updateStats();
+      count.textContent = submissions.length + ' submission' + (submissions.length !== 1 ? 's' : '');
       applyFilters();
     } catch {
-      document.getElementById('table-body').innerHTML =
-        '<tr class="state-row"><td colspan="10">Failed to load. Please refresh.</td></tr>';
+      if (version !== loadVersion) return;
+      tbody.innerHTML = '<tr class="state-row"><td colspan="11">Failed to load. Please refresh.</td></tr>';
     }
   }
 
   // ── Stats ─────────────────────────────────────────────────────────────────
 
   function topOf(arr, key) {
-    const counts = {};
+    const counts = Object.create(null);
     arr.forEach(s => { const v = s[key]; if (v) counts[v] = (counts[v] || 0) + 1; });
     let top = '', max = 0;
     Object.entries(counts).forEach(([k, v]) => { if (v > max) { max = v; top = k; } });
@@ -623,20 +737,17 @@
     document.getElementById('stat-total').textContent = n;
     document.getElementById('stat-week').textContent  = week + ' this week';
 
-    if (n > 0) {
-      const rev  = topOf(allSubmissions, 'annual_revenue');
-      const team = topOf(allSubmissions, 'team_members');
-      document.getElementById('stat-rev-val').textContent  = rev.value  || '—';
-      document.getElementById('stat-rev-pct').textContent  = rev.value  ? rev.pct + '% of firms' : '';
-      document.getElementById('stat-team-val').textContent = team.value || '—';
-      document.getElementById('stat-team-pct').textContent = team.value ? team.pct + '% of firms' : '';
+    const rev  = topOf(allSubmissions, 'annual_revenue');
+    const team = topOf(allSubmissions, 'team_members');
+    document.getElementById('stat-rev-val').textContent  = rev.value  || '—';
+    document.getElementById('stat-rev-pct').textContent  = rev.value  ? rev.pct + '% of firms' : '';
+    document.getElementById('stat-team-val').textContent = team.value || '—';
+    document.getElementById('stat-team-pct').textContent = team.value ? team.pct + '% of firms' : '';
 
-      const pipeline = {};
-      STATUSES.forEach(s => pipeline[s] = 0);
-      allSubmissions.forEach(s => { if (pipeline[s.status] !== undefined) pipeline[s.status]++; });
-      document.getElementById('stat-pipeline').innerHTML =
-        STATUSES.map(s => `<span><strong style="color:var(--green)">${pipeline[s]}</strong> ${s}</span>`).join(' &nbsp;·&nbsp; ');
-    }
+    const pipeline = Object.fromEntries(STATUSES.map(status => [status, 0]));
+    allSubmissions.forEach(s => { if (Object.hasOwn(pipeline, s.status || 'New')) pipeline[s.status || 'New']++; });
+    document.getElementById('stat-pipeline').innerHTML =
+      STATUSES.map(s => `<span><strong style="color:var(--green)">${pipeline[s]}</strong> ${s}</span>`).join(' &nbsp;·&nbsp; ');
   }
 
   // ── Filters ───────────────────────────────────────────────────────────────
@@ -645,6 +756,7 @@
     .forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
 
   function applyFilters() {
+    if (!allSubmissions) return;
     const revenue    = document.getElementById('filter-revenue').value;
     const team       = document.getElementById('filter-team').value;
     const status     = document.getElementById('filter-status').value;
@@ -654,8 +766,8 @@
     filtered = allSubmissions.filter(function (s) {
       if (revenue    && s.annual_revenue !== revenue)          return false;
       if (team       && s.team_members   !== team)             return false;
-      if (status     && s.status         !== status)           return false;
-      if (efficiency && !s.efficiency.includes(efficiency))    return false;
+      if (status     && (s.status || 'New') !== status)        return false;
+      if (efficiency && !(s.efficiency || '').includes(efficiency)) return false;
       if (search) {
         const blob = Object.values(s).join(' ').toLowerCase();
         if (!blob.includes(search)) return false;
@@ -665,28 +777,43 @@
 
     document.getElementById('filter-count').textContent =
       filtered.length + ' of ' + allSubmissions.length + ' shown';
+    exportButton.disabled = !filtered.length;
 
     sortAndRender();
   }
 
   // ── Sort ──────────────────────────────────────────────────────────────────
 
-  document.querySelectorAll('th[data-col]').forEach(function (th) {
+  const sortableHeadings = document.querySelectorAll('th[data-col]');
+  sortableHeadings.forEach(function (th) {
     th.addEventListener('click', function () {
       const col = th.dataset.col;
-      if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
-      else { sortCol = col; sortDir = col === 'id' ? 'desc' : 'asc'; }
-      document.querySelectorAll('th').forEach(t => t.classList.remove('sorted-asc','sorted-desc'));
-      th.classList.add('sorted-' + sortDir);
+      let direction = col === 'id' ? 'desc' : 'asc';
+      if (sortCol === col) direction = sortDir === 'asc' ? 'desc' : 'asc';
+      setSort(col, direction);
       sortAndRender();
     });
   });
 
+  function setSort(col, direction) {
+    sortCol = col;
+    sortDir = direction;
+    sortableHeadings.forEach(th => {
+      th.classList.remove('sorted-asc', 'sorted-desc');
+      th.removeAttribute('aria-sort');
+      if (th.dataset.col === col) {
+        th.classList.add('sorted-' + direction);
+        th.setAttribute('aria-sort', direction === 'asc' ? 'ascending' : 'descending');
+      }
+    });
+  }
+
   function sortAndRender() {
+    if (!allSubmissions) return;
     const dir = sortDir === 'asc' ? 1 : -1;
     const sorted = filtered.slice().sort(function (a, b) {
       if (sortCol === 'id') return dir * (a.id - b.id);
-      return dir * (a[sortCol] || '').localeCompare(b[sortCol] || '');
+      return dir * (a[sortCol] || '').localeCompare(b[sortCol] || '') || b.id - a.id;
     });
     renderTable(sorted);
   }
@@ -701,47 +828,60 @@
   }
 
   function esc(s) {
-    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function statusClass(s) {
-    return 'status-' + (s || 'New').replace(/\s+/g, '-');
+    return 'status-' + (STATUSES.includes(s) ? s : 'New').replace(/\s+/g, '-');
+  }
+
+  function rowActions(disabled) {
+    const button = (action, label) =>
+      `<button class="btn row-action" type="button" data-action="${action}" ${disabled}>${label}</button>`;
+    if (currentView === 'deleted') return button('restore', 'Restore');
+    const first = currentView === 'archive' ? button('unarchive', 'Restore') : button('archive', 'Archive');
+    return first + button('delete', 'Delete');
   }
 
   function renderTable(rows) {
-    const tbody = document.getElementById('table-body');
     if (!rows.length) {
-      tbody.innerHTML = '<tr class="state-row"><td colspan="10">No submissions match the current filters.</td></tr>';
+      const message = allSubmissions.length ? 'No submissions match the current filters.' : VIEWS[currentView].empty;
+      tbody.innerHTML = `<tr class="state-row"><td colspan="11">${message}</td></tr>`;
       return;
     }
 
     tbody.innerHTML = rows.map(function (s) {
       const isExp = expandedId === s.id;
+      const disabled = pending.has(s.id) ? 'disabled' : '';
+      const status = s.status || 'New';
       const row = `<tr class="data-row${isExp?' expanded':''}" data-id="${s.id}">
-        <td class="id-col">${s.id}</td>
-        <td class="date-col">${fmt(s.submitted_at)}</td>
-        <td><strong>${esc(s.name)||'—'}</strong></td>
+        <td class="id-col compact-hide">${s.id}</td>
+        <td class="date-col compact-hide">${fmt(s[VIEWS[currentView].date])}</td>
+        <td><button class="detail-toggle" type="button" aria-expanded="${isExp}" ${disabled}>${esc(s.name) || 'Submission #' + s.id}</button></td>
         <td class="col-hide">${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--green)">${esc(s.email)}</a>`:'—'}</td>
-        <td><span class="pill revenue">${esc(s.annual_revenue)||'—'}</span></td>
+        <td class="compact-hide"><span class="pill revenue">${esc(s.annual_revenue)||'—'}</span></td>
         <td class="col-hide"><span class="pill team">${esc(s.team_members)||'—'}</span></td>
         <td class="col-hide"><span class="pill clients">${esc(s.client_count)||'—'}</span></td>
-        <td>${esc(s.efficiency)||'—'}</td>
+        <td class="compact-hide">${esc(s.efficiency)||'—'}</td>
         <td class="status-col">
-          <div class="status-wrap" data-id="${s.id}">
-            <button class="status-pill ${statusClass(s.status||'New')}" type="button">${esc(s.status||'New')}</button>
+          ${currentView === 'active' ? `<div class="status-wrap" data-id="${s.id}">
+            <button class="status-pill ${statusClass(status)}" type="button" ${disabled}>${esc(status)}</button>
             <ul class="status-menu hidden">
-              ${STATUSES.map(st => `<li data-value="${st}" class="${st===(s.status||'New')?'current':''}"><span class="status-dot dot-${st.replace(/\s+/g,'-')}"></span>${st}</li>`).join('')}
+              ${STATUSES.map(st => `<li data-value="${st}" class="${st === status ? 'current' : ''}"><span class="status-dot dot-${st.replace(/\s+/g,'-')}"></span>${st}</li>`).join('')}
             </ul>
-          </div>
+          </div>` : `<span class="status-pill status-readonly ${statusClass(status)}">${esc(status)}</span>`}
         </td>
-        <td class="bottleneck-col">${esc(s.bottleneck)||''}</td>
+        <td class="bottleneck-col compact-hide">${esc(s.bottleneck)||''}</td>
+        <td class="actions-col">${rowActions(disabled)}</td>
       </tr>`;
 
       const detail = isExp ? `<tr class="expand-row" data-id="${s.id}">
-        <td colspan="10"><div class="expand-inner">
+        <td colspan="11"><div class="expand-inner">
           <div class="expand-field"><label>Name</label><p>${esc(s.name)||'—'}</p></div>
           <div class="expand-field"><label>Email</label><p>${s.email?`<a href="mailto:${esc(s.email)}" style="color:var(--green)">${esc(s.email)}</a>`:'—'}</p></div>
           <div class="expand-field"><label>Phone</label><p>${s.phone?`<a href="tel:${esc(s.phone)}" style="color:var(--green)">${esc(s.phone)}</a>`:'—'}</p></div>
+          <div class="expand-field"><label>Submitted</label><p>${fmt(s.submitted_at)}</p></div>
+          ${currentView === 'active' ? '' : `<div class="expand-field"><label>${VIEWS[currentView].label}</label><p>${fmt(s[VIEWS[currentView].date])}</p></div>`}
           <div class="expand-field"><label>Annual Revenue</label><p>${esc(s.annual_revenue)||'—'}</p></div>
           <div class="expand-field"><label>Team Members</label><p>${esc(s.team_members)||'—'}</p></div>
           <div class="expand-field"><label>Firm Worth</label><p>${esc(s.firm_worth)||'—'}</p></div>
@@ -757,13 +897,16 @@
       return row + detail;
     }).join('');
 
-    // Row click → expand (ignore clicks inside status wrap)
     tbody.querySelectorAll('tr.data-row').forEach(function (tr) {
       tr.addEventListener('click', function (e) {
-        if (e.target.closest('.status-wrap')) return;
+        if (e.target.closest('a, .row-action, .status-wrap')) return;
         const id = parseInt(tr.dataset.id);
+        const detailFocused = document.activeElement === tr.querySelector('.detail-toggle');
         expandedId = expandedId === id ? null : id;
         sortAndRender();
+        if (detailFocused) {
+          tbody.querySelector(`tr[data-id="${id}"] .detail-toggle`).focus({ preventScroll: true });
+        }
       });
     });
 
@@ -789,38 +932,88 @@
       });
 
       menu.querySelectorAll('li').forEach(function (li) {
-        li.addEventListener('click', async function (e) {
+        li.addEventListener('click', function (e) {
           e.stopPropagation();
           const id     = parseInt(wrap.dataset.id);
           const status = li.dataset.value;
           menu.classList.add('hidden');
 
-          // Optimistic update
           const sub = allSubmissions.find(s => s.id === id);
-          if (sub) sub.status = status;
-          btn.textContent = status;
-          btn.className   = 'status-pill ' + statusClass(status);
-          menu.querySelectorAll('li').forEach(l => l.classList.toggle('current', l.dataset.value === status));
-          updateStats();
-
-          await fetch('/api/submissions', {
-            method:  'PATCH',
-            headers: { 'Content-Type': 'application/json', 'X-Admin-Key': adminKey },
-            body:    JSON.stringify({ id, status })
-          });
+          if (status !== (sub.status || 'New')) {
+            changeSubmission(id, 'PATCH', { status }, 'Status updated.');
+          }
         });
       });
     });
+  }
 
-    // Close menus on outside click
-    document.addEventListener('click', function () {
-      tbody.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
-    }, { once: false });
+  document.addEventListener('click', function () {
+    tbody.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
+  });
+
+  tbody.addEventListener('click', async function (e) {
+    const button = e.target.closest('.row-action');
+    if (!button) return;
+
+    const id = Number(button.closest('tr').dataset.id);
+    const action = button.dataset.action;
+    const sub = allSubmissions.find(s => s.id === id);
+    const messages = {
+      archive: 'Submission moved to Archive.',
+      delete: 'Submission moved to Recently Deleted.',
+      unarchive: 'Submission restored to Active Submissions.',
+      restore: sub.archived_at ? 'Submission restored to Archive.' : 'Submission restored to Active Submissions.'
+    };
+    const isDelete = action === 'delete';
+    if (isDelete && !window.confirm('Move this submission to Recently Deleted? You can restore it there.')) return;
+
+    await changeSubmission(id, isDelete ? 'DELETE' : 'PATCH', isDelete ? {} : { action }, messages[action]);
+    if (document.activeElement === document.body) {
+      document.querySelector('.view-btn[aria-pressed="true"]').focus({ preventScroll: true });
+    }
+  });
+
+  function setActionMessage(text, error = false) {
+    const message = document.getElementById('action-message');
+    message.textContent = text;
+    message.classList.toggle('error', error);
+  }
+
+  async function changeSubmission(id, method, fields, message) {
+    if (pending.has(id)) return;
+    pending.add(id);
+    const buttons = tbody.querySelectorAll(`tr[data-id="${id}"] button`);
+    buttons.forEach(button => { button.disabled = true; });
+    setActionMessage('');
+    let refresh = false;
+    try {
+      const res = await fetch('/api/submissions', {
+        method,
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': adminKey },
+        body: JSON.stringify({ id, ...fields })
+      });
+      if (res.status === 401) { clearKey(); location.reload(); return; }
+      if (res.status === 409) {
+        refresh = true;
+        setActionMessage('This submission has already changed or is unavailable.', true);
+      } else if (res.ok) {
+        refresh = true;
+        setActionMessage(message);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      setActionMessage('Could not update the submission. Please try again.', true);
+    } finally {
+      pending.delete(id);
+      tbody.querySelectorAll(`tr[data-id="${id}"] button`).forEach(button => { button.disabled = false; });
+    }
+    if (refresh) await loadSubmissions();
   }
 
   // ── CSV Export ────────────────────────────────────────────────────────────
 
-  document.getElementById('export-btn').addEventListener('click', function () {
+  exportButton.addEventListener('click', function () {
     const headers = ['ID','Submitted At','Name','Email','Phone','Status',
       'Annual Revenue','Team Members','Firm Worth','Client Count',
       'Tax Returns','Tax Software','Documentation','Efficiency','Bottleneck'];
@@ -828,14 +1021,14 @@
       [s.id, s.submitted_at, s.name, s.email, s.phone, s.status,
        s.annual_revenue, s.team_members, s.firm_worth, s.client_count,
        s.tax_returns, s.tax_software, s.documentation, s.efficiency, s.bottleneck
-      ].map(v => '"' + (v||'').replace(/"/g,'""') + '"').join(',')
+      ].map(v => '"' + String(v ?? '').replace(/"/g,'""') + '"').join(',')
     );
     const csv  = [headers.join(','), ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url  = URL.createObjectURL(blob);
     const a    = Object.assign(document.createElement('a'), {
       href: url,
-      download: 'final-cycle-' + new Date().toISOString().slice(0,10) + '.csv'
+      download: 'final-cycle-' + (currentView === 'active' ? '' : currentView + '-') + new Date().toISOString().slice(0,10) + '.csv'
     });
     a.click();
     URL.revokeObjectURL(url);
