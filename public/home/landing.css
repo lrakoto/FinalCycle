@@ -191,6 +191,17 @@ h2 { font-size: clamp(3.2rem, 5.15vw, 5.3rem); line-height: .99; }
   .faq-list summary { transition: color .2s ease; }
   .faq-icon::after { transition: transform .22s ease; }
 
+  @supports (animation-timeline: scroll(root block)) and (animation-range: 0px 620px) {
+    .hero-image {
+      --parallax-distance: clamp(18px, 2.5vw, 32px);
+      top: calc(-1 * var(--parallax-distance));
+      height: calc(100% + var(--parallax-distance));
+      animation: image-enter .85s ease-out both, image-parallax auto linear both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0px 620px;
+    }
+  }
+
   @supports (interpolate-size: allow-keywords) and selector(::details-content) {
     .faq-list details { interpolate-size: allow-keywords; }
     .faq-list details::details-content {
@@ -210,6 +221,10 @@ h2 { font-size: clamp(3.2rem, 5.15vw, 5.3rem); line-height: .99; }
 @keyframes image-enter {
   from { opacity: .82; transform: scale(1.025); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes image-parallax {
+  to { translate: 0 var(--parallax-distance); }
 }
 
 @media (prefers-reduced-motion: reduce) {
