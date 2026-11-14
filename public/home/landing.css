@@ -193,8 +193,7 @@ h2 { font-size: clamp(3.2rem, 5.15vw, 5.3rem); line-height: .99; }
 
   @supports (animation-timeline: scroll(root block)) and (animation-range: 0px 620px) {
     .hero-image {
-      --parallax-distance: clamp(18px, 2.5vw, 32px);
-      top: calc(-1 * var(--parallax-distance));
+      --parallax-distance: clamp(28px, 3.6vw, 48px);
       height: calc(100% + var(--parallax-distance));
       animation: image-enter .85s ease-out both, image-parallax auto linear both;
       animation-timeline: auto, scroll(root block);
@@ -224,7 +223,7 @@ h2 { font-size: clamp(3.2rem, 5.15vw, 5.3rem); line-height: .99; }
 }
 
 @keyframes image-parallax {
-  to { translate: 0 var(--parallax-distance); }
+  to { translate: 0 calc(-1 * var(--parallax-distance)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
