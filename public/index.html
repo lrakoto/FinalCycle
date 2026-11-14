@@ -3,499 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Future Firm Group – Placement Questionnaire</title>
+  <title>Future Firm Group | What’s Next for Your Firm?</title>
+  <meta name="description" content="Exploring succession or a sale for your accounting or tax practice? Tell Future Firm Group about your firm and start a conversation about what comes next." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Future Firm Group | What’s Next for Your Firm?" />
+  <meta property="og:description" content="Start a conversation about succession or a sale for your accounting or tax practice." />
+  <meta property="og:image" content="https://futurefirmgroup.com/FFG-Logo2.png" />
+  <meta property="og:url" content="https://futurefirmgroup.com/" />
+  <link rel="canonical" href="https://futurefirmgroup.com/" />
   <link rel="icon" type="image/webp" href="/FFG-favicon2.webp" />
-  <meta property="og:title"       content="Future Firm Group – Placement Questionnaire" />
-  <meta property="og:description" content="Tell us about your firm. We'll review your responses and be in touch within 1–2 business days." />
-  <meta property="og:image"       content="https://futurefirmgroup.com/FFG-Logo2.png" />
-  <meta property="og:url"         content="https://futurefirmgroup.com" />
-  <meta property="og:type"        content="website" />
-  <meta name="twitter:card"       content="summary" />
-  <meta name="twitter:title"      content="Future Firm Group – Placement Questionnaire" />
-  <meta name="twitter:description" content="Tell us about your firm. We'll review your responses and be in touch within 1–2 business days." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/home/landing.css" />
 </head>
-<body>
-  <div class="page-wrapper">
-    <div class="form-card">
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="wordmark" href="/">
+        <img src="/FFG-Logo2.webp" width="1277" height="170" alt="Future Firm Group home" />
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#process">How it works</a>
+        <a href="#questions">FAQs</a>
+      </nav>
+      <a class="button button-outline header-cta" href="/questionnaire/">Start questionnaire <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </header>
 
-      <!-- Header -->
-      <div class="form-header">
-        <div class="header-logo">
-          <img src="FFG-Logo2.webp" alt="Future Firm Group" width="1277" height="170" />
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">For accounting and tax firm owners</p>
+          <h1 id="hero-title">What’s next<br /> for <em>your firm?</em></h1>
+          <p class="hero-intro">If you’re considering succession or a sale, start by telling us about the practice you’ve built.</p>
+          <div class="hero-actions">
+            <a class="button button-light" href="/questionnaire/">Start questionnaire <span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#process">See how it works <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
-        <h1>Placement Questionnaire</h1>
-        <p class="subtitle">* Indicates required question</p>
+        <div class="hero-visual">
+          <img class="hero-image" src="/home/firm-exterior.webp"
+            srcset="/home/firm-exterior-640.webp 640w, /home/firm-exterior.webp 1120w"
+            sizes="(max-width: 760px) 100vw, (max-width: 1440px) 48vw, 640px"
+            width="1120" height="1400" alt="" fetchpriority="high" />
+        </div>
       </div>
+    </section>
 
-      <!-- Form -->
-      <form id="questionnaire-form" novalidate>
-
-        <!-- Web3Forms config -->
-        <input type="hidden" name="access_key" value="a7a88086-f7df-4478-a0a2-285be6f5cc3f" />
-        <input type="hidden" name="subject" value="New Placement Questionnaire Submission – Future Firm Group" />
-        <input type="hidden" name="from_name" value="Future Firm Group Questionnaire" />
-        <input type="hidden" name="replyto" value="management@roberthalltaxes.com" />
-        <!-- honeypot -->
-        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true" />
-
-        <!-- ── Contact Info ── -->
-        <div class="question-card" id="contact-card">
-          <div class="question-label">Your Contact Information</div>
-          <div class="contact-fields">
-            <div class="contact-field">
-              <label for="contact-name">Full Name <span class="required">*</span></label>
-              <input type="text" id="contact-name" name="name" placeholder="Jane Smith" autocomplete="name" />
-            </div>
-            <div class="contact-field">
-              <label for="contact-email">Email Address <span class="required">*</span></label>
-              <input type="email" id="contact-email" name="email" placeholder="jane@example.com" autocomplete="email" />
-            </div>
-            <div class="contact-field">
-              <label for="contact-phone">Phone Number <span class="required">*</span></label>
-              <input type="tel" id="contact-phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel" />
-            </div>
-          </div>
-          <div class="error-message" id="contact-error">Please fill in all contact fields.</div>
-        </div>
-
-        <!-- ── Q1: Annual Revenue ── -->
-        <div class="question-card" id="q1-card">
-          <div class="question-label">1. What is your current annual gross revenue? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="Under $500K" /><span>Under $500K</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="$500K – $1M" /><span>$500K – $1M</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="$1M – $3M" /><span>$1M – $3M</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="$3M – $7M" /><span>$3M – $7M</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="$7M+" /><span>$7M+</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="annual_revenue" value="other" data-reveals="q1-other" /><span>Other</span></label>
-              <input type="text" id="q1-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q2: Team Members ── -->
-        <div class="question-card" id="q2-card">
-          <div class="question-label">2. How many team members do you currently have (including yourself)? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="team_members" value="Solo" /><span>Solo</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="team_members" value="2–5" /><span>2–5</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="team_members" value="6–20" /><span>6–20</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="team_members" value="20+" /><span>20+</span></label>
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q3: Firm Worth ── -->
-        <div class="question-card" id="q3-card">
-          <div class="question-label">3. If you were to sell today, what do you believe your firm is worth? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="firm_worth" value="Unsure" /><span>Unsure</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="firm_worth" value="1x revenue" /><span>1x revenue</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="firm_worth" value="2–3x EBITDA" /><span>2–3x EBITDA</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="firm_worth" value="Higher" /><span>Higher</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="firm_worth" value="other" data-reveals="q3-other" /><span>Other</span></label>
-              <input type="text" id="q3-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q4: Client Count ── -->
-        <div class="question-card" id="q4-card">
-          <div class="question-label">4. How many clients do you have? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="client_count" value="0–10" /><span>0–10</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="client_count" value="11–25" /><span>11–25</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="client_count" value="26–50" /><span>26–50</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="client_count" value="51–75" /><span>51–75</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="client_count" value="76+" /><span>76+</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="client_count" value="other" data-reveals="q4-other" /><span>Other</span></label>
-              <input type="text" id="q4-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q5: Tax Returns ── -->
-        <div class="question-card" id="q5-card">
-          <div class="question-label">5. Approximately how many tax returns does your office prepare annually? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="tax_returns" value="Under 500" /><span>Under 500</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="tax_returns" value="500–1,000" /><span>500–1,000</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="tax_returns" value="1,001–2,500" /><span>1,001–2,500</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="tax_returns" value="2,501–5,000" /><span>2,501–5,000</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="tax_returns" value="5,000+" /><span>5,000+</span></label>
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q6: Tax Software (checkboxes) ── -->
-        <div class="question-card" id="q6-card">
-          <div class="question-label">6. Which tax software(s) does your firm currently use? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="Lacerte" /><span>Lacerte</span></label>
-            </div>
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="UltraTax CS" /><span>UltraTax CS</span></label>
-            </div>
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="CCH Axcess" /><span>CCH Axcess</span></label>
-            </div>
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="Drake Tax" /><span>Drake Tax</span></label>
-            </div>
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="ProSeries" /><span>ProSeries</span></label>
-            </div>
-            <div class="option">
-              <label><input type="checkbox" name="tax_software" value="other" data-reveals="q6-other" /><span>Other</span></label>
-              <input type="text" id="q6-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">Please select at least one option.</div>
-        </div>
-
-        <!-- ── Q7: Documentation Storage ── -->
-        <div class="question-card" id="q7-card">
-          <div class="question-label">7. Where does your firm primarily store processes, SOPs, and internal documentation? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label><input type="radio" name="documentation" value="Google Drive" /><span>Google Drive</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="Microsoft SharePoint / OneDrive" /><span>Microsoft SharePoint / OneDrive</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="Notion" /><span>Notion</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="Practice Management Software (Karbon, TaxDome, etc.)" /><span>Practice Management Software (Karbon, TaxDome, etc.)</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="Asana" /><span>Asana</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="ClickUp" /><span>ClickUp</span></label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="documentation" value="other" data-reveals="q7-other" /><span>Other</span></label>
-              <input type="text" id="q7-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q8: Operational Efficiency ── -->
-        <div class="question-card" id="q8-card">
-          <div class="question-label">8. How would you rank your office's operational efficiency? <span class="required">*</span></div>
-          <div class="options">
-            <div class="option">
-              <label>
-                <input type="radio" name="efficiency" value="Stone Age" />
-                <span>Stone Age: paper stacks, sticky notes, and pure survival mode</span>
-              </label>
-            </div>
-            <div class="option">
-              <label>
-                <input type="radio" name="efficiency" value="Filing Cabinet Era" />
-                <span>Filing Cabinet Era: organized chaos with a strong attachment to paper</span>
-              </label>
-            </div>
-            <div class="option">
-              <label>
-                <input type="radio" name="efficiency" value="75% Digital" />
-                <span>75% Digital: mostly streamlined, with a few mystery processes still alive</span>
-              </label>
-            </div>
-            <div class="option">
-              <label>
-                <input type="radio" name="efficiency" value="Efficient &amp; Automated" />
-                <span>Efficient &amp; Automated: systems are working and the team actually knows where things are</span>
-              </label>
-            </div>
-            <div class="option">
-              <label>
-                <input type="radio" name="efficiency" value="Future of Tax" />
-                <span>Future of Tax: smooth workflows, automation, and borderline suspicious efficiency</span>
-              </label>
-            </div>
-            <div class="option">
-              <label><input type="radio" name="efficiency" value="other" data-reveals="q8-other" /><span>Other</span></label>
-              <input type="text" id="q8-other" class="other-input hidden" placeholder="Please specify" autocomplete="off" />
-            </div>
-          </div>
-          <div class="error-message">This is a required question.</div>
-        </div>
-
-        <!-- ── Q9: Bottleneck (optional) ── -->
-        <div class="question-card" id="q9-card">
-          <div class="question-label">9. What is the biggest operational bottleneck in your firm today?</div>
-          <textarea id="bottleneck" name="operational_bottleneck" placeholder="Share your thoughts…" rows="5"></textarea>
-        </div>
-
-        <!-- Submit -->
-        <div class="submit-area">
-          <button type="submit" id="submit-btn">Submit</button>
-          <p class="privacy-note">Never submit passwords through this form.</p>
-        </div>
-
-      </form>
-
-      <!-- Thank You (hidden until success) -->
-      <div id="thank-you" class="hidden">
-        <div class="ty-icon">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" stroke="#253622" stroke-width="2"/>
-            <path d="M7.5 12l3 3 6-6" stroke="#253622" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>Thank you!</h2>
-        <p>We've received your questionnaire and will be in touch shortly.</p>
+    <section class="shell section process" id="process" aria-labelledby="process-title">
+      <div class="section-intro">
+        <p class="eyebrow">How it works</p>
+        <h2 id="process-title">From questionnaire<br /> to <em>conversation.</em></h2>
       </div>
+      <ol class="steps" role="list">
+        <li>
+          <div>
+            <h3>Tell us about your practice</h3>
+            <p>Share your revenue range, team size, client volume, and the tools you use to run the firm.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>We review your responses</h3>
+            <p>Our team looks at how your practice operates and where you’re running into bottlenecks.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Talk through next steps</h3>
+            <p>We’ll reach out within 1–2 business days to discuss where you are and what you’d like to explore.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
 
-    </div><!-- /.form-card -->
-  </div><!-- /.page-wrapper -->
+    <section class="questions" id="questions" aria-labelledby="questions-title">
+      <div class="shell section questions-inner">
+        <div class="section-intro">
+          <h2 id="questions-title">Before you begin.</h2>
+        </div>
+        <div class="faq-list">
+          <details name="placement-faq">
+            <summary>Can I start if I’m still exploring? <span class="faq-icon" aria-hidden="true"></span></summary>
+            <p>Yes. You can fill out the questionnaire whether you have a transition in mind or are just starting to think about your options.</p>
+          </details>
+          <details name="placement-faq">
+            <summary>Do I need to know what my firm is worth? <span class="faq-icon" aria-hidden="true"></span></summary>
+            <p>The questionnaire asks for your own estimate. You can choose “Unsure” if you don’t have one yet.</p>
+          </details>
+          <details name="placement-faq">
+            <summary>What should I have handy? <span class="faq-icon" aria-hidden="true"></span></summary>
+            <p>Think about your firm’s annual revenue, team size, client count, and annual tax return volume. The form gives you ranges to choose from.</p>
+          </details>
+        </div>
+      </div>
+    </section>
 
-  <script>
-  (function () {
-    'use strict';
+    <section class="next-step" aria-labelledby="next-step-title">
+      <div class="shell next-step-inner">
+        <h2 id="next-step-title">Ready to tell us about <em>your firm?</em></h2>
+        <a class="button button-light" href="/questionnaire/">Start questionnaire <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
 
-    // ── "Other" input toggling ─────────────────────────────────────────────
-
-    // Radio groups: when any radio in the group changes, show/hide the "other" input
-    document.querySelectorAll('input[type="radio"][data-reveals]').forEach(function (otherRadio) {
-      var name = otherRadio.name;
-      var targetId = otherRadio.dataset.reveals;
-
-      document.querySelectorAll('input[name="' + name + '"]').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-          var target = document.getElementById(targetId);
-          if (otherRadio.checked) {
-            target.classList.remove('hidden');
-            target.focus();
-          } else {
-            target.classList.add('hidden');
-            target.value = '';
-          }
-        });
-      });
-    });
-
-    // Checkboxes: independent toggle per checkbox
-    document.querySelectorAll('input[type="checkbox"][data-reveals]').forEach(function (cb) {
-      cb.addEventListener('change', function () {
-        var target = document.getElementById(cb.dataset.reveals);
-        if (cb.checked) {
-          target.classList.remove('hidden');
-          target.focus();
-        } else {
-          target.classList.add('hidden');
-          target.value = '';
-        }
-      });
-    });
-
-    // ── Validation ─────────────────────────────────────────────────────────
-
-    var REQUIRED = [
-      { id: 'q1-card', type: 'radio',    name: 'annual_revenue' },
-      { id: 'q2-card', type: 'radio',    name: 'team_members'   },
-      { id: 'q3-card', type: 'radio',    name: 'firm_worth'     },
-      { id: 'q4-card', type: 'radio',    name: 'client_count'   },
-      { id: 'q5-card', type: 'radio',    name: 'tax_returns'    },
-      { id: 'q6-card', type: 'checkbox', name: 'tax_software'   },
-      { id: 'q7-card', type: 'radio',    name: 'documentation'  },
-      { id: 'q8-card', type: 'radio',    name: 'efficiency'     },
-    ];
-
-    // Clear contact errors on input
-    ['contact-name','contact-email','contact-phone'].forEach(function (id) {
-      document.getElementById(id).addEventListener('input', function () {
-        document.getElementById('contact-card').classList.remove('error');
-      });
-    });
-
-    // Clear error when user makes a selection
-    REQUIRED.forEach(function (q) {
-      var card = document.getElementById(q.id);
-      document.querySelectorAll('input[name="' + q.name + '"]').forEach(function (input) {
-        input.addEventListener('change', function () {
-          card.classList.remove('error');
-        });
-      });
-    });
-
-    function validate() {
-      var firstError = null;
-      var valid = true;
-
-      // Contact fields
-      var contactCard  = document.getElementById('contact-card');
-      var nameOk  = document.getElementById('contact-name').value.trim() !== '';
-      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('contact-email').value.trim());
-      var phoneOk = document.getElementById('contact-phone').value.trim() !== '';
-      contactCard.classList.remove('error');
-      if (!nameOk || !emailOk || !phoneOk) {
-        contactCard.classList.add('error');
-        document.getElementById('contact-error').textContent =
-          !nameOk ? 'Full name is required.' :
-          !emailOk ? 'Please enter a valid email address.' :
-          'Phone number is required.';
-        valid = false;
-        if (!firstError) firstError = contactCard;
-      }
-
-      REQUIRED.forEach(function (q) {
-        var card = document.getElementById(q.id);
-        card.classList.remove('error');
-
-        var answered = q.type === 'radio'
-          ? !!document.querySelector('input[name="' + q.name + '"]:checked')
-          : document.querySelectorAll('input[name="' + q.name + '"]:checked').length > 0;
-
-        if (!answered) {
-          card.classList.add('error');
-          valid = false;
-          if (!firstError) firstError = card;
-        }
-      });
-
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      return valid;
-    }
-
-    // ── Collect answers ────────────────────────────────────────────────────
-
-    function radioAnswer(name, otherId) {
-      var checked = document.querySelector('input[name="' + name + '"]:checked');
-      if (!checked) return '';
-      if (checked.value === 'other') {
-        var txt = otherId ? (document.getElementById(otherId) || {}).value || '' : '';
-        return txt.trim() ? 'Other: ' + txt.trim() : 'Other';
-      }
-      return checked.value;
-    }
-
-    function checkboxAnswer(name, otherId) {
-      var vals = [];
-      document.querySelectorAll('input[name="' + name + '"]:checked').forEach(function (cb) {
-        if (cb.value === 'other') {
-          var txt = otherId ? (document.getElementById(otherId) || {}).value || '' : '';
-          vals.push(txt.trim() ? 'Other: ' + txt.trim() : 'Other');
-        } else {
-          vals.push(cb.value);
-        }
-      });
-      return vals.join(', ');
-    }
-
-    function buildPayload() {
-      var p = {};
-      p['Name']                          = document.getElementById('contact-name').value.trim();
-      p['Email']                         = document.getElementById('contact-email').value.trim();
-      p['Phone']                         = document.getElementById('contact-phone').value.trim();
-      p['Annual Gross Revenue']          = radioAnswer('annual_revenue', 'q1-other');
-      p['Team Members']                  = radioAnswer('team_members', null);
-      p['Estimated Firm Worth']          = radioAnswer('firm_worth', 'q3-other');
-      p['Number of Clients']             = radioAnswer('client_count', 'q4-other');
-      p['Annual Tax Returns Prepared']   = radioAnswer('tax_returns', null);
-      p['Tax Software Used']             = checkboxAnswer('tax_software', 'q6-other');
-      p['Documentation Storage']         = radioAnswer('documentation', 'q7-other');
-      p['Operational Efficiency Rating'] = radioAnswer('efficiency', 'q8-other');
-      var bottleneck = (document.getElementById('bottleneck').value || '').trim();
-      if (bottleneck) p['Biggest Operational Bottleneck'] = bottleneck;
-      return p;
-    }
-
-    // ── Submit ─────────────────────────────────────────────────────────────
-
-    document.getElementById('questionnaire-form').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!validate()) return;
-
-      var btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Submitting…';
-
-      try {
-        var payload = buildPayload();
-        var res  = await fetch('/api/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        var ok = res.ok;
-        if (!ok) throw new Error('rejected');
-        document.getElementById('questionnaire-form').style.display = 'none';
-        var ty = document.getElementById('thank-you');
-        ty.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (_) {
-        btn.disabled = false;
-        btn.innerHTML = 'Submit';
-        alert('Something went wrong. Please check your connection and try again.');
-      }
-    });
-
-  })();
-  </script>
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <a class="wordmark" href="/">
+        <img src="/FFG-Logo2.webp" width="1277" height="170" alt="Future Firm Group home" />
+      </a>
+      <a class="text-link" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
 </body>
 </html>

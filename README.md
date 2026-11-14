@@ -19,7 +19,7 @@ Live at **https://futurefirmgroup.com**
 cd public && python3 -m http.server 8080
 ```
 
-Open http://localhost:8080/home/ for the landing page or http://localhost:8080/ for the questionnaire.
+Open http://localhost:8080/ for the landing page or http://localhost:8080/questionnaire/ for the questionnaire.
 
 > Form submission requires the Cloudflare Functions runtime. The UI, validation, and "Other" toggles all work locally without it. For the full stack including `/api/*`, use `npx wrangler pages dev public`.
 
@@ -98,8 +98,10 @@ Palette is sampled from `public/FFG-Logo2.png` and defined once as CSS custom pr
 
 ```
 ├── public/                     # ← the deploy root; only this is served
-│   ├── index.html              # Questionnaire form
-│   ├── home/                   # Landing page and its assets
+│   ├── index.html              # Landing page
+│   ├── home/                   # Landing page assets
+│   ├── questionnaire/          # Placement questionnaire
+│   ├── _redirects              # Redirects the former landing page URL
 │   ├── styles.css              # Form styles
 │   ├── _headers                # Cache policy (revalidate CSS, pin hashed assets)
 │   ├── FFG-Logo2.{webp,png}    # Current logo (png is for email/og:image)
